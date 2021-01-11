@@ -15,18 +15,16 @@ while read -r PINGTO; do
 
   COUNTALL=$((COUNTALL+1))
 
-  ping -c1 -I "$WANIF" "$PINGTO" > /dev/null
-  if [ $? -ne 0 ]
+  if ping -c1 -I "$WANIF" "$PINGTO" > /dev/null;
   then
-    echo "$WAN ping problem. $PINGTO"
-    MESSAGE_LINE="$MESSAGE_LINE$PINGTO, "
-
-  else
     echo "$WAN ping OK. $PINGTO"
     # for testing only mail send
     # MESSAGE="$MESSAGE$PINGTO"'\n'
 
     COUNTPING=$((COUNTPING+1))
+  else
+    echo "$WAN ping problem. $PINGTO"
+    MESSAGE_LINE="$MESSAGE_LINE$PINGTO, "
   fi
 
 done < $PINGTOFILE
