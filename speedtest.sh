@@ -27,7 +27,7 @@ done
 if [ $COUNT -gt 4 ]
 then
   echo No speedtest server "$IPERF3".
-  $SENDMAIL "No speedtest server $IPERF3" "No speedtest server $IPERF3"
+  #$SENDMAIL "No speedtest server $IPERF3" "No speedtest server $IPERF3"
 fi
 
 curl -G \
