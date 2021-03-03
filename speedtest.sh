@@ -18,6 +18,7 @@ do
  then
   sleep 2
  else
+  sleep 2
   echo Upload test: $COUNT
   UPLOADSPEED=$(iperf3 -c $IPERF3 -f m | awk '/receiver/{print$7,$8}')
   echo Upload speed: ="$UPLOADSPEED"=
