@@ -12,9 +12,9 @@ COUNTUPLOAD=0
 
 incport() {
   IPERF3_PORT=$((IPERF3_PORT+1))
-  if [ $IPERF3_PORT -gt 9240 ] || [ $IPERF3_PORT -lt 9200 ]
+  if [ $IPERF3_PORT -gt 5209 ] || [ $IPERF3_PORT -lt 5200 ]
   then
-    IPERF3_PORT=9200
+    IPERF3_PORT=5200
   fi
   echo $IPERF3_PORT > "/root/iperf3_port"
 }
@@ -24,7 +24,7 @@ while [ -z "$DOWNLOADSPEED" ] && [ $COUNTDOWNLOAD -lt 5 ]
 do
  COUNTDOWNLOAD=$((COUNTDOWNLOAD+1))
  echo Download test: $COUNTDOWNLOAD, Server: $IPERF3 $IPERF3_PORT
- DOWNLOADSPEED=$(iperf3 -c $IPERF3 $IPERF3_PORT -f m -R | awk '/receiver/{print$7,$8}')
+ DOWNLOADSPEED=$(iperf3 -c $IPERF3 -p $IPERF3_PORT -f m -R | awk '/receiver/{print$7,$8}')
  echo Download speed: ="$DOWNLOADSPEED"=
  if [ -z "$DOWNLOADSPEED" ]
  then
@@ -39,7 +39,7 @@ while [ -z "$UPLOADSPEED" ] && [ $COUNTUPLOAD -lt 5 ]
 do
  COUNTUPLOAD=$((COUNTUPLOAD+1))
  echo Upload test: $COUNTUPLOAD, Server: $IPERF3 $IPERF3_PORT
- UPLOADSPEED=$(iperf3 -c $IPERF3 $IPERF3_PORT -f m | awk '/receiver/{print$7,$8}')
+ UPLOADSPEED=$(iperf3 -c $IPERF3 -p $IPERF3_PORT -f m | awk '/receiver/{print$7,$8}')
  echo Upload speed: ="$UPLOADSPEED"=
  if [ -z "$UPLOADSPEED" ]
  then
