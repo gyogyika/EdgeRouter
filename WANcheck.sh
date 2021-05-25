@@ -1,6 +1,7 @@
 #!/bin/sh
 
 SENDMAIL="/root/send-mail.sh"
+GETIP="/root/GetIP.sh"
 PINGTO1="google.com"
 PINGTO2="8.8.8.8"
 WAN1="eth0.5"
@@ -10,6 +11,7 @@ set_metric() {
   ifdown "$1"
   uci set network."$1".metric="$2"
   ifup "$1"
+  sleep 1s
   echo "$1 metric set to $2, interface restarted."
 }
 
@@ -27,6 +29,7 @@ then
   then
     set_metric "WAN1" "0"
     $SENDMAIL "WAN1 restored" "WANcheck.sh, set_metric WAN1 0"
+    $GETIP
   fi
 else
   echo "WAN1 ping problem. $PINGTO1" | tee /root/WAN1
@@ -45,6 +48,7 @@ else
     then
       set_metric "WAN1" "20"
       $SENDMAIL "Switched to WAN2" "WANcheck.sh, set_metric WAN1 20"
+      $GETIP
     fi
   fi
 fi
