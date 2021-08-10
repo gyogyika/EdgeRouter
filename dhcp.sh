@@ -6,7 +6,7 @@ FILE1="/root/dhcp-current.log"
 FILE2="/root/dhcp-previous.log"
 SENDMAIL="/root/send-mail.sh"
 
-awk '/DHCPDISCOVER/ {print $9}' /tmp/system.log | sort -u > $FILE1
+awk '/no address available/ {print $9, $10, $11, $12}' /tmp/system.log | sort -u > $FILE1
 
 if cmp -s "$FILE1" "$FILE2"
 then
@@ -16,5 +16,5 @@ else
     echo "$FILE1"
     echo "changed to"
     echo "$FILE2"
-    $SENDMAIL "dhcp request" "$(cat $FILE1)"
+    $SENDMAIL "DHCPDISCOVER" "$(cat $FILE1)"
 fi
