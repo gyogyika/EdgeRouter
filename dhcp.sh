@@ -16,5 +16,8 @@ else
     echo "$FILE1"
     echo "changed to"
     echo "$FILE2"
-    $SENDMAIL "DHCPDISCOVER" "$(cat $FILE1)"
+    if [ -s $FILE1 ]
+    then
+      $SENDMAIL "DHCPDISCOVER" "$(cat $FILE1)"
+    fi
 fi
