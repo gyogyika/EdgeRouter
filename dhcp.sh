@@ -6,7 +6,7 @@ FILE1="/root/dhcp-current.log"
 FILE2="/root/dhcp-previous.log"
 SENDMAIL="/root/send-mail.sh"
 
-awk '/no address available/ {print $9, $10, $11, $12}' /tmp/system.log | sort -u > $FILE1
+awk '/no address available$/ {print $9, $10, $11, $12}' /tmp/system.log | sort -u > $FILE1
 
 if cmp -s "$FILE1" "$FILE2"
 then
