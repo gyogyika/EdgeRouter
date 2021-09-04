@@ -22,7 +22,7 @@ restart_interface() {
   echo "$1 interface restarted."
 }
 
-if ping -c1 -I $WAN1 $PINGTO1 > /dev/null;
+if ping -c5 -I $WAN1 $PINGTO1 > /dev/null;
 then
   echo "WAN1 ping OK. $PINGTO1" | tee /root/WAN1
   if [ "$(uci get network.WAN1.metric)" = 20 ]
@@ -34,7 +34,7 @@ then
 else
   echo "WAN1 ping problem. $PINGTO1" | tee /root/WAN1
   #$SENDMAIL "WAN1 no ping to $PINGTO1" "WANcheck.sh, Interface $WAN1"
-  if ping -c1 -I $WAN1 $PINGTO2 > /dev/null;
+  if ping -c5 -I $WAN1 $PINGTO2 > /dev/null;
   then
     echo "WAN1 ping OK. $PINGTO2" | tee /root/WAN1
   else
@@ -53,13 +53,13 @@ else
   fi
 fi
 
-if ping -c1 -I $WAN2 $PINGTO1 > /dev/null;
+if ping -c5 -I $WAN2 $PINGTO1 > /dev/null;
 then
   echo "WAN2 ping OK. $PINGTO1" | tee /root/WAN2
 else
   echo "WAN2 ping problem. $PINGTO1" | tee /root/WAN2
   #$SENDMAIL "WAN2 no ping to $PINGTO1" "WANcheck.sh, Interface $WAN2"
-  if ping -c1 -I $WAN2 $PINGTO2 > /dev/null;
+  if ping -c5 -I $WAN2 $PINGTO2 > /dev/null;
   then
     echo "WAN2 ping OK. $PINGTO2" | tee /root/WAN2
   else

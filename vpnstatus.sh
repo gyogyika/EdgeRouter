@@ -1,9 +1,32 @@
 #!/bin/sh
 
-echo "$1"
-
 if [ -z "$1" ]
 then
-  watch -n1 "echo pomocVPN && cat /var/run/openvpn.pomocvpn.status && echo && echo pomocVPN_Linux && cat /var/run/openvpn.pomocvpn_linux.status && echo && echo SERVER && cat /var/run/openvpn.server.status && echo && echo pederVPN && cat /var/run/openvpn.pedervpn.status"
+echo "$1"
+
+C=""
+
+ROWS=$(ls /var/run/openvpn.*.status | wc -l)
+echo "Number of rows: " $ROWS
+
+I=0;
+
+for F in /var/run/openvpn.*.status;
+  do
+    #echo $F;
+    C="$C echo $F && cat $F";
+    I=$((I+1))
+    if [ $I -lt $ROWS ]
+    then
+      C="$C && echo && ";
+    fi
+done;
+
+#echo $C
+watch -n1 $C
 fi
 
+if [ "$1" != "" ]
+then
+  watch -n1 "echo $1 && cat /var/run/openvpn.$1.status"
+fi
