@@ -28,5 +28,6 @@ fi
 
 if [ "$1" != "" ]
 then
-  watch -n1 "echo $1 && cat /var/run/openvpn.$1.status"
+  VPNSTATUS=/var/run/openvpn.$1.status
+  watch -n1 "echo $VPNSTATUS && cat $VPNSTATUS"
 fi
