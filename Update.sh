@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-SENDMAIL="/root/send-mail.sh"
-LIST="/root/list-upgradable.txt"
+source /root/settings.ini
+
+LIST="/root/settings/logs/list-upgradable.txt"
 TEMP="/tmp/list-upgradable.tmp"
 
 opkg update

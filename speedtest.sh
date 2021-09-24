@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-SENDMAIL="/root/send-mail.sh"
-read -r ROUTERNAME < "/root/routername"
-read -r IPERF3 < "/root/iperf3"
-read -r IPERF3_PORT < "/root/iperf3_port"
-read -r SPEEDTEST_URL < "/root/speedtest_url"
+source /root/settings.ini
+
+read -r IPERF3_PORT < "$IPERF3_PORT_FILE"
+
+echo "Iperf3 port: ""$IPERF3_PORT"
+
 DOWNLOADSPEED=""
 UPLOADSPEED=""
 COUNTDOWNLOAD=0
@@ -16,15 +17,15 @@ incport() {
   then
     IPERF3_PORT=5200
   fi
-  echo $IPERF3_PORT > "/root/iperf3_port"
+  echo $IPERF3_PORT > "$IPERF3_PORT_FILE"
 }
 
 
 while [ -z "$DOWNLOADSPEED" ] && [ $COUNTDOWNLOAD -lt 5 ]
 do
  COUNTDOWNLOAD=$((COUNTDOWNLOAD+1))
- echo Download test: $COUNTDOWNLOAD, Server: $IPERF3 $IPERF3_PORT
- DOWNLOADSPEED=$(iperf3 -c $IPERF3 -p $IPERF3_PORT -f m -R | awk '/receiver/{print$7,$8}')
+ echo Download test: $COUNTDOWNLOAD, Server: $IPERF3_SERVER $IPERF3_PORT
+ DOWNLOADSPEED=$(iperf3 -c $IPERF3_SERVER -p $IPERF3_PORT -f m -R | awk '/receiver/{print$7,$8}')
  echo Download speed: ="$DOWNLOADSPEED"=
  if [ -z "$DOWNLOADSPEED" ]
  then
@@ -38,8 +39,8 @@ sleep 2
 while [ -z "$UPLOADSPEED" ] && [ $COUNTUPLOAD -lt 5 ]
 do
  COUNTUPLOAD=$((COUNTUPLOAD+1))
- echo Upload test: $COUNTUPLOAD, Server: $IPERF3 $IPERF3_PORT
- UPLOADSPEED=$(iperf3 -c $IPERF3 -p $IPERF3_PORT -f m | awk '/receiver/{print$7,$8}')
+ echo Upload test: $COUNTUPLOAD, Server: $IPERF3_SERVER $IPERF3_PORT
+ UPLOADSPEED=$(iperf3 -c $IPERF3_SERVER -p $IPERF3_PORT -f m | awk '/receiver/{print$7,$8}')
  echo Upload speed: ="$UPLOADSPEED"=
  if [ -z "$UPLOADSPEED" ]
  then
@@ -50,14 +51,14 @@ done
 
 if [ $COUNTDOWNLOAD -gt 4 ]
 then
-  echo No download speedtest server "$IPERF3".
-  #$SENDMAIL "No download speedtest server $IPERF3" "No speedtest server $IPERF3"
+  echo No download speedtest server "$IPERF3_SERVER".
+  $SENDMAIL "No download speedtest server $IPERF3_SERVER" "No speedtest server $IPERF3_SERVER"
 fi
 
 if [ $COUNTUPLOAD -gt 4 ]
 then
-  echo No upload speedtest server "$IPERF3".
-  #$SENDMAIL "No upload speedtest server $IPERF3" "No speedtest server $IPERF3"
+  echo No upload speedtest server "$IPERF3_SERVER".
+  $SENDMAIL "No upload speedtest server $IPERF3_SERVER" "No speedtest server $IPERF3_SERVER"
 fi
 
 curl -G \

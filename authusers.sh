@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-SENDMAIL="/root/send-mail.sh"
+source /root/settings.ini
 
 #1st line is the username
 USERNAME=$(awk 'NR==1' "$1")
@@ -23,7 +23,7 @@ while read -r line; do
     exit 0
   fi
 
-done < "/root/authusers"
+done < "authusers"
 
 echo "not ok"
 $SENDMAIL "OpenVPN auth failed: $USERNAME" "OpenVPN auth failed. Username: $USERNAME, password: $PASSWORD"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #running as server
 iperf3 -s -f M

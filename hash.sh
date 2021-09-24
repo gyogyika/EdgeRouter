@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "=""$1""="
 HASH=$(printf "%s" "$1" | md5sum)

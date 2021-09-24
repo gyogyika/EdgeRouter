@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 read -r IPERF3_PORT < "/root/iperf3_port"
 

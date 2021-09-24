@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-#send-mail.sh "Send-arp.sh - test" "test"
+source /root/settings.ini
 
-FILE1="/root/Send-arp-current.log"
-FILE2="/root/Send-arp-previous.log"
-SENDMAIL="/root/send-mail.sh"
+#$SENDMAIL "Send-arp.sh - test" "test"
+
+FILE1="/root/settings/logs/Send-arp-current.log"
+FILE2="/root/settings/logs/Send-arp-previous.log"
 
 cat /proc/net/arp > $FILE1
 

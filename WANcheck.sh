@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-SENDMAIL="/root/send-mail.sh"
-GETIP="/root/GetIP.sh"
+source /root/settings.ini
+
 PINGTO1="google.com"
 PINGTO2="8.8.8.8"
 WAN1="eth0.5"
@@ -24,7 +24,7 @@ restart_interface() {
 
 if ping -c5 -I $WAN1 $PINGTO1 > /dev/null;
 then
-  echo "WAN1 ping OK. $PINGTO1" | tee /root/WAN1
+  echo "WAN1 ping OK. $PINGTO1" | tee /root/settings/logs/WAN1
   if [ "$(uci get network.WAN1.metric)" = 20 ]
   then
     set_metric "WAN1" "0"
@@ -32,13 +32,13 @@ then
     $GETIP
   fi
 else
-  echo "WAN1 ping problem. $PINGTO1" | tee /root/WAN1
+  echo "WAN1 ping problem. $PINGTO1" | tee /root/settings/logs/WAN1
   #$SENDMAIL "WAN1 no ping to $PINGTO1" "WANcheck.sh, Interface $WAN1"
   if ping -c5 -I $WAN1 $PINGTO2 > /dev/null;
   then
-    echo "WAN1 ping OK. $PINGTO2" | tee /root/WAN1
+    echo "WAN1 ping OK. $PINGTO2" | tee /root/settings/logs/WAN1
   else
-    echo "WAN1 ping problem. $PINGTO2" | tee /root/WAN1
+    echo "WAN1 ping problem. $PINGTO2" | tee /root/settings/logs/WAN1
     $SENDMAIL "WAN1 no ping to $PINGTO2" "WANcheck.sh, Interface $WAN1"
     if [ "$(uci get network.WAN1.metric)" = 20 ]
     then
@@ -55,15 +55,15 @@ fi
 
 if ping -c5 -I $WAN2 $PINGTO1 > /dev/null;
 then
-  echo "WAN2 ping OK. $PINGTO1" | tee /root/WAN2
+  echo "WAN2 ping OK. $PINGTO1" | tee /root/settings/logs/WAN2
 else
-  echo "WAN2 ping problem. $PINGTO1" | tee /root/WAN2
+  echo "WAN2 ping problem. $PINGTO1" | tee /root/settings/logs/WAN2
   #$SENDMAIL "WAN2 no ping to $PINGTO1" "WANcheck.sh, Interface $WAN2"
   if ping -c5 -I $WAN2 $PINGTO2 > /dev/null;
   then
-    echo "WAN2 ping OK. $PINGTO2" | tee /root/WAN2
+    echo "WAN2 ping OK. $PINGTO2" | tee /root/settings/logs/WAN2
   else
-    echo "WAN2 ping problem. $PINGTO2" | tee /root/WAN2
+    echo "WAN2 ping problem. $PINGTO2" | tee /root/settings/logs/WAN2
     $SENDMAIL "WAN2 no ping to $PINGTO2" "WANcheck.sh, Interface $WAN2"
     restart_interface "WAN2"
   fi

@@ -1,11 +1,17 @@
-#!/bin/sh
-read -r ROUTERNAME < "/root/routername"
-read -r GETIP_URL < "/root/GetIP_url"
+#!/bin/bash
 
+source /root/settings.ini
+
+echo
+echo "GetIP:" "$GETIP_URL""$ROUTERNAME"
 curl "$GETIP_URL""$ROUTERNAME"
+echo
+echo
 
-read -r FREEMYIP < "/root/freemyip"
+echo "freemyip:" "$FREEMYIP"
 curl "$FREEMYIP"
+echo
 
-read -r FREEMYIP2 < "/root/freemyip2"
+echo "freemyip2:" "$FREEMYIP2"
 curl "$FREEMYIP2"
+echo

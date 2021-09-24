@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-#send-mail.sh "Send-dhcp.sh - test" "test"
+source /root/settings.ini
 
-FILE1="/root/dhcp-current.log"
-FILE2="/root/dhcp-previous.log"
-SENDMAIL="/root/send-mail.sh"
+#$SENDMAIL "Send-dhcp.sh - test" "test"
+
+FILE1="/root/settings/logs/dhcp-current.log"
+FILE2="/root/settings/logs/dhcp-previous.log"
 
 awk '/no address available$/ {print $9, $10, $11, $12}' /tmp/system.log | sort -u > $FILE1
 

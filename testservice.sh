@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SERVICE="emailrelay"
 if pgrep "$SERVICE" >/dev/null
 then

@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-#send-mail.sh "Send-log.sh - test" "test"
+source /root/settings.ini
 
-FILE1="/root/Send-log-current.log"
-FILE2="/root/Send-log-previous.log"
-SENDMAIL="/root/send-mail.sh"
+#$SENDMAIL "Send-log.sh - test" "test"
+
+FILE1="/root/settings/logs/Send-log-current.log"
+FILE2="/root/settings/logs/Send-log-previous.log"
 
 grep -E 'kern|auth|daemon.info|user' /tmp/system.log | tail -n20 > $FILE1
 

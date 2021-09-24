@@ -1,7 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-SENDMAIL="/root/send-mail.sh"
-PINGTOFILE="/root/pingto"
+source /root/settings.ini
 
 WANtest() {
 
