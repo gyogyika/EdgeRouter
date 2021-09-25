@@ -26,7 +26,7 @@ while read -r PINGTO; do
     MESSAGE_LINE="$MESSAGE_LINE$PINGTO, "
   fi
 
-done < $PINGTOFILE
+done < "$PINGTOFILE"
 
 # for testing
 # echo $COUNTPING

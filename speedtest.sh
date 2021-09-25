@@ -24,8 +24,8 @@ incport() {
 while [ -z "$DOWNLOADSPEED" ] && [ $COUNTDOWNLOAD -lt 5 ]
 do
  COUNTDOWNLOAD=$((COUNTDOWNLOAD+1))
- echo Download test: $COUNTDOWNLOAD, Server: $IPERF3_SERVER $IPERF3_PORT
- DOWNLOADSPEED=$(iperf3 -c $IPERF3_SERVER -p $IPERF3_PORT -f m -R | awk '/receiver/{print$7,$8}')
+ echo Download test: $COUNTDOWNLOAD, Server: "$IPERF3_SERVER" "$IPERF3_PORT"
+ DOWNLOADSPEED=$(iperf3 -c "$IPERF3_SERVER" -p "$IPERF3_PORT" -f m -R | awk '/receiver/{print$7,$8}')
  echo Download speed: ="$DOWNLOADSPEED"=
  if [ -z "$DOWNLOADSPEED" ]
  then
@@ -39,8 +39,8 @@ sleep 2
 while [ -z "$UPLOADSPEED" ] && [ $COUNTUPLOAD -lt 5 ]
 do
  COUNTUPLOAD=$((COUNTUPLOAD+1))
- echo Upload test: $COUNTUPLOAD, Server: $IPERF3_SERVER $IPERF3_PORT
- UPLOADSPEED=$(iperf3 -c $IPERF3_SERVER -p $IPERF3_PORT -f m | awk '/receiver/{print$7,$8}')
+ echo Upload test: $COUNTUPLOAD, Server: "$IPERF3_SERVER" "$IPERF3_PORT"
+ UPLOADSPEED=$(iperf3 -c "$IPERF3_SERVER" -p "$IPERF3_PORT" -f m | awk '/receiver/{print$7,$8}')
  echo Upload speed: ="$UPLOADSPEED"=
  if [ -z "$UPLOADSPEED" ]
  then
@@ -65,4 +65,4 @@ curl -G \
   --data-urlencode "name=$ROUTERNAME" \
   --data-urlencode "downloadspeed=$DOWNLOADSPEED" \
   --data-urlencode "uploadspeed=$UPLOADSPEED" \
-$SPEEDTEST_URL
+"$SPEEDTEST_URL"
