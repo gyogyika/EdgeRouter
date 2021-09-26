@@ -41,5 +41,5 @@ fi
 
 }
 
-WANtest "WAN1" "eth0.5"
-WANtest "WAN2" "eth0.1"
+WANtest "WAN1" "$WAN1"
+WANtest "WAN2" "$WAN2"
