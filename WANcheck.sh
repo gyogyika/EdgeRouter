@@ -4,8 +4,6 @@ source /root/settings.ini
 
 PINGTO1="google.com"
 PINGTO2="8.8.8.8"
-WAN1="eth0.5"
-WAN2="eth0.1"
 
 set_metric() {
   ifdown "$1"
