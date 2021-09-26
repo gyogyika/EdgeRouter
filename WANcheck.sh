@@ -21,23 +21,23 @@ restart_interface() {
 }
 
 check_ip_change() {
-  CURRENT_WAN1_IP="/tmp/wan1_ip_current"
-  PREV_WAN1_IP="/tmp/wan1_ip_prev"
+  INET_CURRENT_IP="/tmp/inet_ip_current"
+  INET_PREV_IP="/tmp/inet_ip_previous"
 
-  curl -s "$GETIP_URL" | tee "$CURRENT_WAN1_IP"
+  curl -s "$GETIP_URL" | tee "$INET_CURRENT_IP"
   echo
-  if cmp -s "$CURRENT_WAN1_IP" "$PREV_WAN1_IP"
+  if cmp -s "$INET_CURRENT_IP" "$INET_PREV_IP"
   then
     echo "IP not changed."
   else
-    cp $CURRENT_WAN1_IP $PREV_WAN1_IP
+    cp $INET_CURRENT_IP $INET_PREV_IP
     $GETIP
     echo "IP changed."
   fi
   echo
 }
 
-if ping -c5 -I $WAN1 $PINGTO1 > /dev/null;
+if ping -c5 -I "$WAN1" $PINGTO1 > /dev/null;
 then
   echo "WAN1 ping OK. $PINGTO1"
   if [ "$(uci get network.WAN1.metric)" = 20 ]
@@ -49,7 +49,7 @@ then
 else
   echo "WAN1 ping problem. $PINGTO1"
   #$SENDMAIL "WAN1 no ping to $PINGTO1" "WANcheck.sh, Interface $WAN1"
-  if ping -c5 -I $WAN1 $PINGTO2 > /dev/null;
+  if ping -c5 -I "$WAN1" $PINGTO2 > /dev/null;
   then
     echo "WAN1 ping OK. $PINGTO2"
   else
@@ -68,13 +68,13 @@ else
   fi
 fi
 
-if ping -c5 -I $WAN2 $PINGTO1 > /dev/null;
+if ping -c5 -I "$WAN2" $PINGTO1 > /dev/null;
 then
   echo "WAN2 ping OK. $PINGTO1"
 else
   echo "WAN2 ping problem. $PINGTO1"
   #$SENDMAIL "WAN2 no ping to $PINGTO1" "WANcheck.sh, Interface $WAN2"
-  if ping -c5 -I $WAN2 $PINGTO2 > /dev/null;
+  if ping -c5 -I "$WAN2" $PINGTO2 > /dev/null;
   then
     echo "WAN2 ping OK. $PINGTO2"
   else
