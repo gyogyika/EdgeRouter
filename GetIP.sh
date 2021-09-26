@@ -3,8 +3,9 @@
 source /root/settings.ini
 
 echo
-echo "GetIP:" "$GETIP_URL""$ROUTERNAME"
-curl "$GETIP_URL""$ROUTERNAME"
+URL="$GETIP_URL"?name="$ROUTERNAME"
+echo "GetIP:" "$URL"
+curl "$URL"
 echo
 echo
 

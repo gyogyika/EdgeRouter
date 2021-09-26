@@ -4,8 +4,8 @@ source /root/settings.ini
 
 #$SENDMAIL "Send-log.sh - test" "test"
 
-FILE1="/root/settings/logs/Send-log-current.log"
-FILE2="/root/settings/logs/Send-log-previous.log"
+FILE1="/tmp/Send-log-current.log"
+FILE2="/tmp/Send-log-previous.log"
 
 grep -E 'kern|auth|daemon.info|user' /tmp/system.log | tail -n20 > $FILE1
 

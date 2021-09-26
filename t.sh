@@ -1,7 +1,8 @@
 #!/bin/bash
 
-read -r IPERF3_PORT < "/root/iperf3_port"
+#read -r IPERF3_PORT < "/root/iperf3_port"
 
-IPERF3_PORT=$((IPERF3_PORT+1))
+#echo $IPERF3_PORT > "/root/iperf3_port"
 
-echo $IPERF3_PORT > "/root/iperf3_port"
+curl https://www.gyogyi.info/content/getip/getip.php -o ip.txt
+

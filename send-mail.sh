@@ -18,4 +18,4 @@ fi
 
 mailsend -f "$SENDMAIL_FROM" -t "$SENDMAIL_TO" -sub "$SUBJECT" -M "$MESSAGE" -smtp localhost
 NOW=$(date +"%d.%m.%Y %A, %H:%M")
-echo "$NOW - $1" >> /root/settings/logs/send-mail.log
+echo "$NOW - $1" >> /tmp/send-mail.log

@@ -4,8 +4,8 @@ source /root/settings.ini
 
 #$SENDMAIL "Send-dhcp.sh - test" "test"
 
-FILE1="/root/settings/logs/dhcp-current.log"
-FILE2="/root/settings/logs/dhcp-previous.log"
+FILE1="/tmp/dhcp-current.log"
+FILE2="/tmp/dhcp-previous.log"
 
 awk '/no address available$/ {print $9, $10, $11, $12}' /tmp/system.log | sort -u > $FILE1
 

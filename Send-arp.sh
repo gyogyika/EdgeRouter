@@ -4,8 +4,8 @@ source /root/settings.ini
 
 #$SENDMAIL "Send-arp.sh - test" "test"
 
-FILE1="/root/settings/logs/Send-arp-current.log"
-FILE2="/root/settings/logs/Send-arp-previous.log"
+FILE1="/tmp/Send-arp-current.log"
+FILE2="/tmp/Send-arp-previous.log"
 
 cat /proc/net/arp > $FILE1
 
