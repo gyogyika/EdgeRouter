@@ -5,21 +5,24 @@ source /root/settings.ini
 #$SENDMAIL "Send-arp.sh - test" "test"
 
 FILE1="/tmp/Send-arp-current.log"
-FILE2="/tmp/Send-arp-previous.log"
+FILE2="/root/log/Send-arp-previous.log"
+RESULT="/tmp/arp-result"
 
 cat /proc/net/arp > $FILE1
 
-diff $FILE1 $FILE2
-
-#grep -E 'kern|auth|daemon.info|user' /tmp/system.log | tail -n20 > $FILE1
-
-if [ $? -eq 0 ]
+if [ ! -s $FILE2 ]
 then
-    printf 'The file "%s" is the same as "%s"\n' "$FILE1" "$FILE2"
-else
+  #file has no data
+  touch $FILE2
+  echo File was created: "$FILE2"
+fi
+
+comm -3 --nocheck-order $FILE1 $FILE2 > $RESULT
+
+if [ -s $RESULT ]
+then
+    #file has data
+    cat $RESULT
+    $SENDMAIL "arp changed" "$(cat $RESULT)"
     cp $FILE1 $FILE2
-    echo "$FILE1"
-    echo "changed to"
-    echo "$FILE2"
-    $SENDMAIL "arp change" "$(cat $FILE1) \nchanged to\n $(cat $FILE2)"
 fi
