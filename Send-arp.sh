@@ -12,17 +12,24 @@ cat /proc/net/arp > $FILE1
 
 if [ ! -s $FILE2 ]
 then
-  #file has no data
-  touch $FILE2
-  echo File was created: "$FILE2"
+    #file FILE2 has no data
+    if touch $FILE2
+    then
+       echo File was created: "$FILE2"
+    else
+       echo File was not created: "$FILE2"
+       $SENDMAIL "Send-arp.sh" "File was not created: $FILE2"
+    fi
 fi
 
 comm -3 --nocheck-order $FILE1 $FILE2 > $RESULT
 
 if [ -s $RESULT ]
 then
-    #file has data
+    #file RESULT has data
     cat $RESULT
     $SENDMAIL "arp changed" "$(cat $RESULT)"
     cp $FILE1 $FILE2
+else
+    echo No new entries.
 fi
