@@ -14,7 +14,7 @@ while read -r PINGTO; do
 
   COUNTALL=$((COUNTALL+1))
 
-  if ping -c1 -I "$WANIF" "$PINGTO" > /dev/null;
+  if ping -c1 -W1 -I "$WANIF" "$PINGTO" > /dev/null;
   then
     echo "$WAN ping OK. $PINGTO"
     # for testing only mail send
