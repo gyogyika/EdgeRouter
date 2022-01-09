@@ -3,6 +3,7 @@
 source /root/settings.ini
 
 PINGTOSTK="/root/pingtostk"
+COUNTER=0
 
 Pingto() {
 
@@ -15,28 +16,29 @@ Pingto() {
    INTERFACE=$(echo "$INTERFACEPINGTO" | awk '{print $2}')
    PINGTO=$(echo "$INTERFACEPINGTO" | awk '{print $3}')
 
-   #COUNTALL=$((COUNTALL+1))
-
-   if ping -c1 -W1 -I "$INTERFACE" "$PINGTO" > /dev/null;
+   if ! [[ $DEVICE == "#"* ]];
    then
-     echo "$DEVICE $INTERFACE $PINGTO ping OK."
-     # for testing only mail send
-     # MESSAGE="$MESSAGE$PINGTO"'\n'
 
-     #COUNTPING=$((COUNTPING+1))
-   else
-     echo "$DEVICE $INTERFACE $PINGTO ping none."
-     MESSAGE_LINE="$MESSAGE_LINE$DEVICE: $PINGTO"$'\n'
+     COUNTER=$((COUNTER+1))
+
+     if ping -c1 -W1 -I "$INTERFACE" "$PINGTO" > /dev/null;
+     then
+       echo "$COUNTER: $DEVICE $INTERFACE $PINGTO ping OK."
+     else
+       echo "$COUNTER: $DEVICE $INTERFACE $PINGTO ping none."
+       MESSAGE_LINE="$MESSAGE_LINE$DEVICE: $PINGTO"$'\n'
+     fi
    fi
 
  done < "$FILE"
 
  if [[ -n "$MESSAGE_LINE" ]];
  then
-   echo -e "No ping to:"'\n'"$MESSAGE_LINE"
+   echo -e '\n'"No ping to:"'\n'"$MESSAGE_LINE"
    $SENDMAIL "ping none" "$MESSAGE_LINE"
  fi
 }
 
+echo -e '\n'
 Pingto "$PINGTOSTK"
 
