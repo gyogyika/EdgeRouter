@@ -16,7 +16,7 @@ Pingto() {
    INTERFACE=$(echo "$INTERFACEPINGTO" | awk '{print $2}')
    PINGTO=$(echo "$INTERFACEPINGTO" | awk '{print $3}')
 
-   if ! [[ $DEVICE == "#"* ]];
+   if ! [[ $DEVICE == "#"* || $INTERFACEPINGTO == "" ]];
    then
 
      COUNTER=$((COUNTER+1))
