@@ -5,6 +5,12 @@ source /root/settings.ini
 PINGTOSTK="/root/pingtostk"
 COUNTER=0
 
+C_BLACK="\e[0m"
+C_RED="\e[0;31m"
+C_REDB="\e[1;31m"
+C_GREEN="\e[0;32m"
+C_GREENB="\e[1;32m"
+
 Pingto() {
 
  FILE=$1
@@ -23,9 +29,9 @@ Pingto() {
 
      if ping -c1 -W1 -I "$INTERFACE" "$PINGTO" > /dev/null;
      then
-       echo "$COUNTER: $DEVICE $INTERFACE $PINGTO ping OK."
+       echo -e "$COUNTER: $DEVICE $INTERFACE $PINGTO $C_GREENB ping OK.$C_BLACK"
      else
-       echo "$COUNTER: $DEVICE $INTERFACE $PINGTO ping none."
+       echo -e "$COUNTER: $DEVICE $INTERFACE $PINGTO $C_REDB ping NONE.$C_BLACK"
        MESSAGE_LINE="$MESSAGE_LINE$DEVICE: $PINGTO"$'\n'
      fi
    fi
