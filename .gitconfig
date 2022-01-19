@@ -1,7 +1,0 @@
-# This is Git's per-user configuration file.
-[user]
-	name = gyogyika
-	email = info@gyogyi.info
-# Please adapt and uncomment the following lines:
-#	name = root
-#	email = root@gyogyi.OpenWrt
