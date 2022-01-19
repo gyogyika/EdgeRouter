@@ -1,0 +1,36 @@
+#Linka1
+STKLoggerLinka1 br-lan 192.168.1.200
+STKNVR1Linka1 br-lan 192.168.1.210
+STKNVR2Linka1 br-lan 192.168.1.219
+P01 br-lan 192.168.1.211
+Z01 br-lan 192.168.1.212
+V01 br-lan 192.168.1.213
+R011/Z21 br-lan 192.168.1.214
+R012 br-lan 192.168.1.215
+R013 br-lan 192.168.1.216
+orangepi11 br-lan 192.168.1.201
+orangepi12 br-lan 192.168.1.202
+
+#Linka2
+STKLoggerLinka2 br-lan 192.168.1.199
+STKNVR1Linka2 br-lan 192.168.1.220
+STKNVR2Linka2 br-lan 192.168.1.229
+P02 br-lan 192.168.1.221
+Z02 br-lan 192.168.1.222
+#V02 br-lan 192.168.1.223
+R021/Z22 br-lan 192.168.1.224
+R022 br-lan 192.168.1.225
+orangepi21 br-lan 192.168.1.204
+orangepi22 br-lan 192.168.1.205
+
+#Linka3
+STKLoggerLinka3 br-lan 192.168.1.198
+STKNVR1Linka3 br-lan 192.168.1.230
+STKNVR2Linka3 br-lan 192.168.1.239
+P03 br-lan 192.168.1.231
+Z03 br-lan 192.168.1.232
+#V03 br-lan 192.168.1.233
+R031/Z23 br-lan 192.168.1.234
+R032 br-lan 192.168.1.235
+orangepi31 br-lan 192.168.1.207
+orangepi32 br-lan 192.168.1.208

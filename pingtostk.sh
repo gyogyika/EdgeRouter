@@ -2,7 +2,7 @@
 
 source /root/settings.ini
 
-PINGTOSTK="/root/pingtostk"
+PINGTOSTK="/root/pingto2"
 COUNTER=0
 
 C_BLACK="\e[0m"
