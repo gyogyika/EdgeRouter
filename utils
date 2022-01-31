@@ -1,0 +1,32 @@
+
+get_metric() {
+  echo "$(uci get network."$1".metric)"
+}
+
+set_metric() {
+  if [ "$(get_metric "$1")" != "$2" ]
+  then
+    ifdown "$1"
+    sleep 1s
+    uci set network."$1".metric="$2"
+    ifup "$1"
+    echo "$1 metric set to $2, interface restarted."
+  fi
+}
+
+check_ip_change() {
+  INET_CURRENT_IP="/tmp/inet_ip_current"
+  INET_PREV_IP="/tmp/inet_ip_previous"
+
+  curl -s "$GETIP_URL" | tee "$INET_CURRENT_IP"
+  echo
+  if cmp -s "$INET_CURRENT_IP" "$INET_PREV_IP"
+  then
+    echo "IP not changed."
+  else
+    cp $INET_CURRENT_IP $INET_PREV_IP
+    $GETIP
+    echo "IP changed."
+  fi
+  echo
+}
