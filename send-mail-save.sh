@@ -41,7 +41,7 @@ SendMail() {
 
   if [ "$STATUS" = "OK" ]
   then
-    printf "${FUNCNAME[0]}(): "
+    printf "%s" "${FUNCNAME[0]}(): "
     curl --max-time 5 --silent --get \
       --data-urlencode "from=$SENDMAIL_FROM" \
       --data-urlencode "subject=$SUBJECT" \
