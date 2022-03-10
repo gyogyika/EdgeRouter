@@ -3,6 +3,8 @@
 SAVE_DIR="/tmp/spool/sendmail/"
 SMCF="/tmp/savemail_counter"
 
+[ ! -d "$SAVE_DIR" ] && mkdir -p "$SAVE_DIR"
+
 get_counter() {
   read -r SAVEMAIL_COUNTER < "$SMCF"
   if [ "$SAVEMAIL_COUNTER" = "" ]
@@ -21,10 +23,9 @@ SaveMail() {
   SUBJECT=$1
   MESSAGE=$2
   SAVEMAIL_COUNTER=""
-  [ ! -d "$SAVE_DIR" ] && mkdir -p "$SAVE_DIR"
   inc_counter
   FILE="$SAVE_DIR""$SAVEMAIL_COUNTER"
-  echo "Subject: ""$SUBJECT" > "$FILE"
+  echo "Offline: ""$SUBJECT" > "$FILE"
   echo "$MESSAGE" >> "$FILE"
   echo "${FUNCNAME[0]}(): Mail saved locally to ""$FILE"
 }

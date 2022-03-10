@@ -61,7 +61,7 @@ then
   $SENDMAIL "No upload speedtest server $IPERF3_SERVER" "No speedtest server $IPERF3_SERVER"
 fi
 
-curl -G \
+curl --max-time 5 --get \
   --data-urlencode "name=$ROUTERNAME" \
   --data-urlencode "downloadspeed=$DOWNLOADSPEED" \
   --data-urlencode "uploadspeed=$UPLOADSPEED" \
