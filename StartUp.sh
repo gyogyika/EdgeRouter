@@ -2,7 +2,7 @@
 
 source /root/settings.ini
 
-emailrelay --as-server --forward-on-disconnect --poll=60 --forward-to="$SMTP_SERVER":465 --client-tls-connection --client-auth=/etc/emailrelay.auth --log-file=/tmp/emailrelay.log --no-syslog
+#emailrelay --as-server --forward-on-disconnect --poll=60 --forward-to="$SMTP_SERVER":465 --client-tls-connection --client-auth=/etc/emailrelay.auth --log-file=/tmp/emailrelay.log --no-syslog
 
 sleep 10
 
