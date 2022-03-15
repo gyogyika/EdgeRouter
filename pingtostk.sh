@@ -38,7 +38,7 @@ Pingto() {
  if [[ -n "$MESSAGE_LINE" ]];
  then
    echo -e '\n'"No ping to:"'\n'"$MESSAGE_LINE"
-   $SENDMAIL "ping none""$NO_PING_COUNTER" "$MESSAGE_LINE"
+   $SENDMAIL "ping none ""$NO_PING_COUNTER" "$MESSAGE_LINE"
  fi
 }
 
