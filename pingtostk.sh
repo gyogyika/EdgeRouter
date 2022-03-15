@@ -5,6 +5,7 @@ source /root/colors.ini
 
 PINGTOSTK="/root/pingtostk"
 COUNTER=0
+NO_PING_COUNTER=0
 
 Pingto() {
 
@@ -28,6 +29,7 @@ Pingto() {
      else
        echo -e "$COUNTER: $DEVICE $INTERFACE $PINGTO $Color_REDB ping NONE.$Color_BLACK"
        MESSAGE_LINE="$MESSAGE_LINE$DEVICE: $PINGTO"$'\n'
+       NO_PING_COUNTER=$((NO_PING_COUNTER+1))
      fi
    fi
 
@@ -36,7 +38,7 @@ Pingto() {
  if [[ -n "$MESSAGE_LINE" ]];
  then
    echo -e '\n'"No ping to:"'\n'"$MESSAGE_LINE"
-   $SENDMAIL "ping none" "$MESSAGE_LINE"
+   $SENDMAIL "ping none""$NO_PING_COUNTER" "$MESSAGE_LINE"
  fi
 }
 
