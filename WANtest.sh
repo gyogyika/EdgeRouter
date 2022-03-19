@@ -32,16 +32,10 @@ then
   fi
 fi
 
-if [ "$WAN1NAME" != "none" ]
-then
-  echo "$WAN1NAME INTERNET: $WAN1_INTERNET"
-  echo $WAN1NAME metric is: "$(get_metric "$WAN1NAME")"
-fi
+echo "$WAN1NAME INTERNET: $WAN1_INTERNET"
+echo $WAN1NAME metric is: "$(get_metric "$WAN1NAME")"
 
-if [ "$WAN2NAME" != "none" ]
-then
-  echo "$WAN2NAME INTERNET: $WAN2_INTERNET"
-  echo $WAN2NAME metric is: "$(get_metric "$WAN2NAME")"
-fi
+echo "$WAN2NAME INTERNET: $WAN2_INTERNET"
+echo $WAN2NAME metric is: "$(get_metric "$WAN2NAME")"
 
 check_ip_change
