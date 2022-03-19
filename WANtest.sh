@@ -1,11 +1,14 @@
 #!/bin/bash
 
 source /root/settings.ini
-source /root/pingto.sh
+source /root/pinginterface.sh
 source /root/utils
 
-pingto "WAN1" "$WAN1"
-pingto "WAN2" "$WAN2"
+pinginterface "WAN1" "$WAN1"
+WAN1_INTERNET=$WAN_RESULT
+
+pinginterface "WAN2" "$WAN2"
+WAN2_INTERNET=$WAN_RESULT
 
 if [[ "$WAN1_INTERNET" = "OFFLINE" && "$WAN2_INTERNET" = "ONLINE" ]]
 then

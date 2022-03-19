@@ -2,13 +2,14 @@
 
 source /root/colors.ini
 
-pingto() {
+pinginterface() {
 
   WAN=$1
   WANIF=$2
   MESSAGE_LINE=""
   COUNTPING=0
   COUNTALL=0
+  WAN_RESULT=""
 
   if [ "$WANIF" != "none" ]
   then
@@ -33,7 +34,7 @@ pingto() {
         fi
       fi
 
-    done < "$PINGTOFILE"
+    done < /root/pinginterface
 
     # for testing
     #echo "Success pings:" $COUNTPING
@@ -51,20 +52,10 @@ pingto() {
     if [ $COUNTPING -gt 0 ]
     then
       echo -e "$Color_GREENB$WAN Internet is online on interface $WANIF$Color_BLACK"
-      WAN_INTERNET="ONLINE"
+      WAN_RESULT="ONLINE"
     else
       echo -e "$Color_REDB$WAN Internet is offline on interface $WANIF$Color_BLACK"
-      WAN_INTERNET="OFFLINE"
-    fi
-
-    if [ "$WAN" = "WAN1" ]
-    then
-      WAN1_INTERNET=$WAN_INTERNET
-    fi
-
-    if [ "$WAN" = "WAN2" ]
-    then
-      WAN2_INTERNET=$WAN_INTERNET
+      WAN_RESULT="OFFLINE"
     fi
 
   fi
