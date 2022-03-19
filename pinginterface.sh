@@ -26,11 +26,11 @@ pinginterface() {
         if ping -c1 -W1 -I "$WANIF" "$PING" > /dev/null
         then
           echo "$WAN ping OK. $PING"
-          MESSAGE_LINE="$MESSAGE_LINE$PINGTOLINE - ping OK"$'\n'
+          MESSAGE_LINE="$MESSAGE_LINE$PINGTOLINE - OK"$'\n'
           COUNTPING=$((COUNTPING+1))
         else
           echo -e "$Color_REDB$WAN ping problem. $PING$Color_BLACK"
-          MESSAGE_LINE="$MESSAGE_LINE$PINGTOLINE - no ping"$'\n'
+          MESSAGE_LINE="$MESSAGE_LINE$PINGTOLINE - NO PING"$'\n'
         fi
       fi
 
