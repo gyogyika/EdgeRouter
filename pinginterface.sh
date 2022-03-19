@@ -9,7 +9,7 @@ pinginterface() {
   MESSAGE_LINE=""
   COUNTPING=0
   COUNTALL=0
-  WAN_RESULT=""
+  WAN_RESULT="none"
 
   if [ "$WANIF" != "none" ]
   then
