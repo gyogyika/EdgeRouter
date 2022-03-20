@@ -5,20 +5,22 @@ source /root/colors.ini
 pinginterface() {
 
   WAN=$1
-  if [ $OPENWRTVER -gt 20 ]
-  then
-    WANIF=$(uci get network.$1.device)
-  else
-    WANIF=$(uci get network.$1.ifname)
-  fi
-
-  MESSAGE_LINE=""
-  COUNTPING=0
-  COUNTALL=0
   WAN_RESULT="none"
 
-  if [ "$WANIF" != "none" ]
+  if [ "$WAN" != "none" ]
+
   then
+
+    if [ $OPENWRTVER -gt 20 ]
+    then
+      WANIF=$(uci get network.$1.device)
+    else
+      WANIF=$(uci get network.$1.ifname)
+    fi
+
+    MESSAGE_LINE=""
+    COUNTPING=0
+    COUNTALL=0
 
     while read -r PINGTOLINE; do
 
