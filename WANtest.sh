@@ -4,10 +4,10 @@ source /root/settings.ini
 source /root/pinginterface.sh
 source /root/utils
 
-pinginterface "$WAN1NAME" "$WAN1INT"
+pinginterface "$WAN1NAME"
 WAN1_INTERNET=$WAN_RESULT
 
-pinginterface "$WAN2NAME" "$WAN2INT"
+pinginterface "$WAN2NAME"
 WAN2_INTERNET=$WAN_RESULT
 
 if [[ "$WAN1_INTERNET" = "OFFLINE" && "$WAN2_INTERNET" = "ONLINE" ]]
