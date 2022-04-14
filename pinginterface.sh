@@ -73,7 +73,7 @@ pinginterface() {
     NOPING=$((COUNTALL-COUNTPING))
     #echo "$WAN no pings: "$NOPING
 
-    if [ $NOPING -gt 1 ]
+    if [ $NOPING -gt 7 ]
     then
       MESSAGE_LINE="$MESSAGE_LINE""All pings: $COUNTALL"$'\n'"Success pings: $COUNTPING"$'\n'
       MESSAGE_LINE="$MESSAGE_LINE""Interface: $WAN"$'\n'"Device: $WANIF"
