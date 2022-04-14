@@ -30,3 +30,24 @@ check_ip_change() {
   fi
   echo
 }
+
+get_interface_ip() {
+  ifstatus $1 | jsonfilter -e '@["ipv4-address"][0].address'
+}
+
+get_interface_proto() {
+  ifstatus $1 | jsonfilter -e '@["proto"]'
+}
+
+set_wan_status() {
+  #$1=wanname WAN1|WAN2, $2=status ONLINE|OFFLINE
+  WAN_STATUS_FILE="/tmp/$1"
+  echo "$2" > "$WAN_STATUS_FILE"
+}
+
+get_wan_status() {
+  #$1=wanname, result in WAN_STATUS variable
+  WAN_STATUS_FILE="/tmp/$1"
+  read -r WAN_STATUS < "$WAN_STATUS_FILE"
+}
+

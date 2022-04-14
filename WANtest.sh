@@ -4,10 +4,12 @@ source /root/settings.ini
 source /root/pinginterface.sh
 source /root/utils
 
-pinginterface "$WAN1NAME"
+echo "$WAN1NAME ISP: $ISP1NAME"
+pinginterface "$WAN1NAME" "$ISP1NAME"
 WAN1_INTERNET=$WAN_RESULT
 
-pinginterface "$WAN2NAME"
+echo "$WAN2NAME ISP: $ISP2NAME"
+pinginterface "$WAN2NAME" "$ISP2NAME"
 WAN2_INTERNET=$WAN_RESULT
 
 if [[ "$WAN1_INTERNET" = "OFFLINE" && "$WAN2_INTERNET" = "ONLINE" ]]
@@ -27,8 +29,13 @@ then
   if [ "$(get_metric "$WAN1NAME")" != 0 ]
   then
     set_metric "$WAN1NAME" "0"
+    $SENDMAIL "$WAN1NAME restored, set_metric 0" "set_metric $WAN1NAME 0"
+  fi
+
+  if [ "$(get_metric "$WAN2NAME")" != 1 ]
+  then
     set_metric "$WAN2NAME" "1"
-    $SENDMAIL "$WAN1NAME restored" "set_metric $WAN1NAME 0, set_metric $WAN2NAME 1"
+    $SENDMAIL "$WAN2NAME set_metric 1" "set_metric $WAN2NAME 1"
   fi
 fi
 

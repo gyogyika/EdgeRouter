@@ -5,11 +5,34 @@ source /root/colors.ini
 pinginterface() {
 
   WAN=$1
+  ISP=$2
   WAN_RESULT="none"
+  WAN_IP=$(get_interface_ip $WAN)
+  WAN_PROTO=$(get_interface_proto $WAN)
+  echo $WAN IP: $WAN_IP $WAN_PROTO
+  get_wan_status "$WAN"
+  WAN_PREV_STATUS=$WAN_STATUS
 
-  if [ "$WAN" != "none" ]
+  if [ "$WAN_IP" = "" ]
+  then
+    echo $WAN IP not assigned.
+
+    if [ "$WAN_PREV_STATUS" = "OFFLINE" ]
+    then
+      $SENDMAIL "$WAN IP not assigned" "ISP: $ISP, proto: $WAN_PROTO"
+    fi
+
+    set_wan_status "$WAN" "NONE"
+  fi
+
+  if [ "$WAN_IP" != "" ]
 
   then
+
+    if [ "$WAN_PREV_STATUS" = "NONE" ]
+    then
+      $SENDMAIL "$WAN IP assigned: $WAN_IP" "ISP: $ISP, proto: $WAN_PROTO"
+    fi
 
     if [ $OPENWRTVER -gt 20 ]
     then
@@ -60,11 +83,22 @@ pinginterface() {
     if [ $COUNTPING -gt 0 ]
     then
       echo -e "$Color_GREENB$WAN Internet is online on interface $WANIF$Color_BLACK"
+      set_wan_status "$WAN" "ONLINE"
       WAN_RESULT="ONLINE"
+      if [ "$WAN_PREV_STATUS" = "OFFLINE" ]
+      then
+        $SENDMAIL "$WAN restored: $WAN_IP" "ISP: $ISP, proto: $WAN_PROTO"
+      fi
     else
       echo -e "$Color_REDB$WAN Internet is offline on interface $WANIF$Color_BLACK"
+      set_wan_status "$WAN" "OFFLINE"
       WAN_RESULT="OFFLINE"
+      ifdown $1
+      sleep 1s
+      ifup $1
+      echo "Interface $1 restarted."
     fi
 
   fi
+  echo 
 }
