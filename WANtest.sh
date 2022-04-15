@@ -29,7 +29,7 @@ then
   if [ "$(get_metric "$WAN1NAME")" != 0 ]
   then
     set_metric "$WAN1NAME" "0"
-    $SENDMAIL "$WAN1NAME restored, set_metric 0" "set_metric $WAN1NAME 0"
+    $SENDMAIL "$WAN1NAME set_metric 0" "set_metric $WAN1NAME 0"
   fi
 
   if [ "$WAN2NAME" != "none" ]

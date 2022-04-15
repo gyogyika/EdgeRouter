@@ -16,7 +16,7 @@ then
 
   if [ "$WAN_IP" = "" ]
   then
-    echo "$WAN" IP not assigned.
+    echo "$WAN" IP not assigned. # WAN_PREV_STATUS is NONE
 
     if [ "$WAN_PREV_STATUS" = "OFFLINE" ]
     then
@@ -79,7 +79,7 @@ then
     then
       MESSAGE_LINE="$MESSAGE_LINE""All pings: $COUNTALL"$'\n'"Success pings: $COUNTPING"$'\n'
       MESSAGE_LINE="$MESSAGE_LINE""Interface: $WAN"$'\n'"Device: $WANIF"
-      $SENDMAIL "$WAN no pings: $NOPING" "$MESSAGE_LINE"
+      $SENDMAIL "$WAN no pings: $NOPING, $WAN IP: $WAN_IP $WAN_PROTO" "$MESSAGE_LINE"
     fi
 
     if [ $COUNTPING -gt 0 ]
@@ -87,9 +87,9 @@ then
       echo -e "$Color_GREENB$WAN Internet is online on interface $WANIF$Color_BLACK"
       set_wan_status "$WAN" "ONLINE"
       WAN_RESULT="ONLINE"
-      if [ "$WAN_PREV_STATUS" = "OFFLINE" ]
+      if [ "$WAN_PREV_STATUS" = "OFFLINE" ] || [ "$WAN_PREV_STATUS" = "NONE" ]
       then
-        $SENDMAIL "$WAN restored: $WAN_IP" "ISP: $ISP, proto: $WAN_PROTO"
+        $SENDMAIL "$WAN restored to online: $WAN_IP" "ISP: $ISP, proto: $WAN_PROTO"
       fi
     else
       echo -e "$Color_REDB$WAN Internet is offline on interface $WANIF$Color_BLACK"
