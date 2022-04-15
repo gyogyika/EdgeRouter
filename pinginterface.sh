@@ -4,18 +4,19 @@ source /root/colors.ini
 
 pinginterface() {
 
+if [ "$1" != "none" ]
+then
   WAN=$1
   ISP=$2
-  WAN_RESULT="none"
-  WAN_IP=$(get_interface_ip $WAN)
-  WAN_PROTO=$(get_interface_proto $WAN)
-  echo $WAN IP: $WAN_IP $WAN_PROTO
+  WAN_IP=$(get_interface_ip "$WAN")
+  WAN_PROTO=$(get_interface_proto "$WAN")
+  echo "$WAN IP: $WAN_IP $WAN_PROTO"
   get_wan_status "$WAN"
   WAN_PREV_STATUS=$WAN_STATUS
 
   if [ "$WAN_IP" = "" ]
   then
-    echo $WAN IP not assigned.
+    echo "$WAN" IP not assigned.
 
     if [ "$WAN_PREV_STATUS" = "OFFLINE" ]
     then
@@ -23,6 +24,7 @@ pinginterface() {
     fi
 
     set_wan_status "$WAN" "NONE"
+    WAN_RESULT="NONE"
   fi
 
   if [ "$WAN_IP" != "" ]
@@ -34,11 +36,11 @@ pinginterface() {
       $SENDMAIL "$WAN IP assigned: $WAN_IP" "ISP: $ISP, proto: $WAN_PROTO"
     fi
 
-    if [ $OPENWRTVER -gt 20 ]
+    if [ "$OPENWRTVER" -gt 20 ]
     then
-      WANIF=$(uci get network.$1.device)
+      WANIF=$(uci get network."$WAN".device)
     else
-      WANIF=$(uci get network.$1.ifname)
+      WANIF=$(uci get network."$WAN".ifname)
     fi
 
     MESSAGE_LINE=""
@@ -93,12 +95,15 @@ pinginterface() {
       echo -e "$Color_REDB$WAN Internet is offline on interface $WANIF$Color_BLACK"
       set_wan_status "$WAN" "OFFLINE"
       WAN_RESULT="OFFLINE"
-      ifdown $1
+      ifdown "$WAN"
       sleep 1s
-      ifup $1
-      echo "Interface $1 restarted."
+      ifup "$WAN"
+      echo "Interface $WAN restarted."
     fi
 
   fi
-  echo 
+else
+  WAN_RESULT="NONE"
+fi
+echo 
 }

@@ -1,16 +1,22 @@
 
 get_metric() {
-  echo "$(uci get network."$1".metric)"
+  if [ "$1" != "none" ]
+  then
+    uci get network."$1".metric
+  fi
 }
 
 set_metric() {
-  if [ "$(get_metric "$1")" != "$2" ]
+  if [ "$1" != "none" ]
   then
-    ifdown "$1"
-    sleep 1s
-    uci set network."$1".metric="$2"
-    ifup "$1"
-    echo "$1 metric set to $2, interface restarted."
+    if [ "$(get_metric "$1")" != "$2" ]
+    then
+      ifdown "$1"
+      sleep 1s
+      uci set network."$1".metric="$2"
+      ifup "$1"
+      echo "$1 metric set to $2, interface restarted."
+    fi
   fi
 }
 
@@ -32,11 +38,11 @@ check_ip_change() {
 }
 
 get_interface_ip() {
-  ifstatus $1 | jsonfilter -e '@["ipv4-address"][0].address'
+  ifstatus "$1" | jsonfilter -e '@["ipv4-address"][0].address'
 }
 
 get_interface_proto() {
-  ifstatus $1 | jsonfilter -e '@["proto"]'
+  ifstatus "$1" | jsonfilter -e '@["proto"]'
 }
 
 set_wan_status() {
@@ -50,4 +56,3 @@ get_wan_status() {
   WAN_STATUS_FILE="/tmp/$1"
   read -r WAN_STATUS < "$WAN_STATUS_FILE"
 }
-

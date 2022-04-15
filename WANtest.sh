@@ -32,17 +32,20 @@ then
     $SENDMAIL "$WAN1NAME restored, set_metric 0" "set_metric $WAN1NAME 0"
   fi
 
-  if [ "$(get_metric "$WAN2NAME")" != 1 ]
+  if [ "$WAN2NAME" != "none" ]
   then
-    set_metric "$WAN2NAME" "1"
-    $SENDMAIL "$WAN2NAME set_metric 1" "set_metric $WAN2NAME 1"
+    if [ "$(get_metric "$WAN2NAME")" != 1 ]
+    then
+      set_metric "$WAN2NAME" "1"
+      $SENDMAIL "$WAN2NAME set_metric 1" "set_metric $WAN2NAME 1"
+    fi
   fi
 fi
 
 echo "$WAN1NAME INTERNET: $WAN1_INTERNET"
-echo $WAN1NAME metric is: "$(get_metric "$WAN1NAME")"
+echo "$WAN1NAME" metric is: "$(get_metric "$WAN1NAME")"
 
 echo "$WAN2NAME INTERNET: $WAN2_INTERNET"
-echo $WAN2NAME metric is: "$(get_metric "$WAN2NAME")"
+echo "$WAN2NAME" metric is: "$(get_metric "$WAN2NAME")"
 
 check_ip_change
