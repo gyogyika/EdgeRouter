@@ -6,6 +6,8 @@ source /root/colors.ini
 COUNTER=0
 NO_PING_COUNTER=0
 NO_PING_DEVICE=""
+NOPINGS="/tmp/NOPINGS"
+echo "" > $NOPINGS
 
 Pingto() {
 
@@ -40,6 +42,7 @@ Pingto() {
  then
    echo -e '\n'"No ping to:"'\n'"$MESSAGE_LINE"
    $SENDMAIL "ping none $NO_PING_COUNTER: $NO_PING_DEVICE"  "$MESSAGE_LINE"
+   echo -e $NO_PING_DEVICE > $NOPINGS
  fi
 }
 
