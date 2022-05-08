@@ -12,6 +12,9 @@ WAN2_STATUS=$WAN_STATUS
 NOPINGS="invalid"
 read -r NOPINGS < "/tmp/NOPINGS"
 
+SPEEDTEST="invalid"
+read -r SPEEDTEST < "/tmp/SPEEDTEST"
+
 TIME=$(date +%s)
 
 curl --get \
@@ -20,4 +23,5 @@ curl --get \
   --data-urlencode "WAN2=$WAN2_STATUS" \
   --data-urlencode "NOPINGS=$NOPINGS" \
   --data-urlencode "time=$TIME" \
+  --data-urlencode "SPEEDTEST=$SPEEDTEST" \
 "$STATUS_URL"

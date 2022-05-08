@@ -66,3 +66,5 @@ curl --max-time 5 --get \
   --data-urlencode "downloadspeed=$DOWNLOADSPEED" \
   --data-urlencode "uploadspeed=$UPLOADSPEED" \
 "$SPEEDTEST_URL"
+
+echo "$DOWNLOADSPEED / $UPLOADSPEED" > /tmp/SPEEDTEST
