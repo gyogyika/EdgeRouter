@@ -9,7 +9,7 @@ for SERVERNAME in /var/run/openvpn.*.status;
     #echo "$SERVERNAME"
     #awk -F: - field separator for : sign
     #awk -F: '/^Common/{flag=1;next} /^ROUTING TABLE/{flag=0} flag {print $1}' "$SERVERNAME" >> "$VPNCLIENTS"
-    awk -F: '/^Virtual Address/{flag=1;next} /^GLOBAL STATS/{flag=0} flag {print $1}' "$SERVERNAME" >> "$VPNCLIENTS"
+    awk -F, '/^Virtual Address/{flag=1;next} /^GLOBAL STATS/{flag=0} flag {print $1", "$2", "$3}' "$SERVERNAME" >> "$VPNCLIENTS"
   done;
 
 cat $VPNCLIENTS
