@@ -37,6 +37,9 @@ echo "CPU: $CPU"
 Storage_load=$(df -h | awk '/overlayfs/ {print $5}')
 echo "Storage_load: $Storage_load"
 
+OpenWrt=$(awk -F= '/DISTRIB_DESCRIPTION/ {print $2}' /etc/openwrt_release)
+echo "OpenWrt: $OpenWrt"
+
 TIME=$(date +%s)
 
 curl --get \
@@ -54,4 +57,5 @@ curl --get \
   --data-urlencode "ARP_count=$ARP_count" \
   --data-urlencode "CPU=$CPU" \
   --data-urlencode "Storage_load=$Storage_load" \
+  --data-urlencode "OpenWrt=$OpenWrt" \
 "$STATUS_URL"
