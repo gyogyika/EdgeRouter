@@ -31,8 +31,8 @@ echo "Memory_load: $Memory_load"
 Uptime=$(cat /proc/stat | awk '/^btime/{print $2}')
 echo "Uptime: $Uptime"
 
-CPU_load=$(top -n1 | awk '/^CPU/{print $2$3" "$4$5" "$6$7" "$8$9" "$10$11" "$12$13" "$14$15}')
-echo "CPU_load: $CPU_load"
+CPU=$(top -n1 | awk '/^CPU/{print $2$3" "$4$5" "$6$7" "$8$9" "$10$11" "$12$13" "$14$15}')
+echo "CPU: $CPU"
 
 TIME=$(date +%s)
 
@@ -49,5 +49,5 @@ curl --get \
   --data-urlencode "DHCP_LEASES=$DHCP_LEASES" \
   --data-urlencode "Uptime=$Uptime" \
   --data-urlencode "ARP_count=$ARP_count" \
-  --data-urlencode "CPU_load=$CPU_load" \
+  --data-urlencode "CPU=$CPU" \
 "$STATUS_URL"
