@@ -34,6 +34,10 @@ echo "Uptime: $Uptime"
 CPU=$(top -n1 | awk '/^CPU/{print $2$3" "$4$5" "$6$7" "$8$9" "$10$11" "$12$13" "$14$15}')
 echo "CPU: $CPU"
 
+CPU_load=$(top -n1 | awk '/^CPU/{print $8}' | tr -d %)
+CPU_load=$((100-$CPU_load))
+echo "CPU_load: $CPU_load"
+
 Storage_load=$(df -h | awk '/overlayfs/ {print $5}')
 echo "Storage_load: $Storage_load"
 
@@ -56,6 +60,7 @@ curl --get \
   --data-urlencode "Uptime=$Uptime" \
   --data-urlencode "ARP_count=$ARP_count" \
   --data-urlencode "CPU=$CPU" \
+  --data-urlencode "CPU_load=$CPU_load" \
   --data-urlencode "Storage_load=$Storage_load" \
   --data-urlencode "OpenWrt=$OpenWrt" \
 "$STATUS_URL"
