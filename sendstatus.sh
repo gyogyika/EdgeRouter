@@ -31,10 +31,15 @@ echo "Memory_load: $Memory_load"
 Uptime=$(cat /proc/stat | awk '/^btime/{print $2}')
 echo "Uptime: $Uptime"
 
-CPU=$(top -n1 | awk '/^CPU/{print $2$3" "$4$5" "$6$7" "$8$9" "$10$11" "$12$13" "$14$15}')
+CPU=$(top -n1 | awk '/^CPU/{$1="";print $0}')
 echo "CPU: $CPU"
 
-CPU_load=$(top -n1 | awk '/^CPU/{print $8}' | tr -d %)
+CPU_load=$(echo "$CPU" | awk '{print $7}')
+#echo "CPU_load: $CPU_load"
+
+# remove % sign
+CPU_load=$(echo "$CPU_load" | awk -F% '{print $1}')
+
 CPU_load=$((100-$CPU_load))
 echo "CPU_load: $CPU_load"
 
