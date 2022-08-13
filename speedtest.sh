@@ -21,7 +21,7 @@ incport() {
 }
 
 
-while [ -z "$DOWNLOADSPEED" ] && [ $COUNTDOWNLOAD -lt 5 ]
+while [ -z "$DOWNLOADSPEED" ] && [ $COUNTDOWNLOAD -lt 15 ]
 do
  COUNTDOWNLOAD=$((COUNTDOWNLOAD+1))
  echo Download test: $COUNTDOWNLOAD, Server: "$IPERF3_SERVER" "$IPERF3_PORT"
@@ -29,14 +29,14 @@ do
  echo Download speed: ="$DOWNLOADSPEED"=
  if [ -z "$DOWNLOADSPEED" ]
  then
-  sleep 2
+  sleep 3
   incport
  fi
 done
 
 sleep 2
 
-while [ -z "$UPLOADSPEED" ] && [ $COUNTUPLOAD -lt 5 ]
+while [ -z "$UPLOADSPEED" ] && [ $COUNTUPLOAD -lt 15 ]
 do
  COUNTUPLOAD=$((COUNTUPLOAD+1))
  echo Upload test: $COUNTUPLOAD, Server: "$IPERF3_SERVER" "$IPERF3_PORT"
@@ -44,21 +44,21 @@ do
  echo Upload speed: ="$UPLOADSPEED"=
  if [ -z "$UPLOADSPEED" ]
  then
-  sleep 2
+  sleep 3
   incport
  fi
 done
 
-if [ $COUNTDOWNLOAD -gt 4 ]
+if [ $COUNTDOWNLOAD -gt 14 ]
 then
   echo No download speedtest server "$IPERF3_SERVER".
-  $SENDMAIL "No download speedtest server $IPERF3_SERVER" "No speedtest server $IPERF3_SERVER"
+  #$SENDMAIL "No download speedtest server $IPERF3_SERVER" "No speedtest server $IPERF3_SERVER"
 fi
 
-if [ $COUNTUPLOAD -gt 4 ]
+if [ $COUNTUPLOAD -gt 14 ]
 then
   echo No upload speedtest server "$IPERF3_SERVER".
-  $SENDMAIL "No upload speedtest server $IPERF3_SERVER" "No speedtest server $IPERF3_SERVER"
+  #$SENDMAIL "No upload speedtest server $IPERF3_SERVER" "No speedtest server $IPERF3_SERVER"
 fi
 
 curl --max-time 5 --get \
