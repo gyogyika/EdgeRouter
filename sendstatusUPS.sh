@@ -97,4 +97,13 @@ curl --get \
   --data-urlencode "CPU_load=$CPU_load" \
   --data-urlencode "Storage_load=$Storage_load" \
   --data-urlencode "OpenWrt=$OpenWrt" \
+  --data-urlencode "UPS_model=$UPS_model" \
+  --data-urlencode "UPS_battery_date=$UPS_battery_date" \
+  --data-urlencode "UPS_battery_charge=$UPS_battery_charge" \
+  --data-urlencode "UPS_battery_time=$UPS_battery_time" \
+  --data-urlencode "UPS_battery_voltage=$UPS_battery_voltage" \
+  --data-urlencode "UPS_load=$UPS_load" \
+  --data-urlencode "UPS_voltage=$UPS_voltage" \
+  --data-urlencode "UPS_status=$UPS_status" \
+  --data-urlencode "UPS_date=$UPS_date" \
 "$STATUS_URL"
