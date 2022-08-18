@@ -25,7 +25,7 @@ Pingto() {
 
      COUNTER=$((COUNTER+1))
 
-     if ping -c1 -W1 -I "$INTERFACE" "$PINGTO" > /dev/null;
+     if ping -c1 -W2 -I "$INTERFACE" "$PINGTO" > /dev/null;
      then
        echo -e "$COUNTER: $DEVICE $INTERFACE $PINGTO $Color_GREENB ping OK.$Color_BLACK"
      else
