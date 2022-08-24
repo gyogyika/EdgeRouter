@@ -9,6 +9,9 @@ WAN1_STATUS=$WAN_STATUS
 get_wan_status "WAN2"
 WAN2_STATUS=$WAN_STATUS
 
+get_wan_status "WAN3"
+WAN3_STATUS=$WAN_STATUS
+
 NOPINGS="invalid"
 read -r NOPINGS < "/tmp/NOPINGS"
 
@@ -56,6 +59,7 @@ curl --get \
   --data-urlencode "name=$ROUTERNAME" \
   --data-urlencode "WAN1=$WAN1_STATUS" \
   --data-urlencode "WAN2=$WAN2_STATUS" \
+  --data-urlencode "WAN3=$WAN3_STATUS" \
   --data-urlencode "NOPINGS=$NOPINGS" \
   --data-urlencode "Memory_load=$Memory_load" \
   --data-urlencode "time=$TIME" \
