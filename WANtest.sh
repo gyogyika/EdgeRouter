@@ -23,7 +23,8 @@ then
   then
     set_metric "$WAN1NAME" "20"
     set_metric "$WAN2NAME" "1"
-    $SENDMAIL "Switched to $WAN2NAME" "set_metric $WAN1NAME 20, set_metric $WAN2NAME 1"
+    set_metric "$WAN3NAME" "2"
+    $SENDMAIL "Switched to $WAN2NAME" "set_metric $WAN1NAME 20, set_metric $WAN2NAME 1 set_metric $WAN3NAME 2"
   fi
 fi
 
