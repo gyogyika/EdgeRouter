@@ -19,7 +19,7 @@ VPNCLIENTS="invalid"
 VPNCLIENTS=$(awk '{print}' "/tmp/VPNCLIENTS") #multiline read
 
 DHCP_LEASES=$(awk 'END{print NR}' "/tmp/dhcp.leases")
-#echo DHCP Leases: $DHCP_LEASES
+echo DHCP Leases: $DHCP_LEASES
 
 ARP_count=$(cat /proc/net/arp | wc -l)
 ((ARP_count=ARP_count-1))
