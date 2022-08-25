@@ -5,15 +5,15 @@ source /root/pinginterface.sh
 source /root/utils
 
 echo "$WAN1NAME ISP 1: $ISP1NAME"
-pinginterface "$WAN1NAME" "$ISP1NAME"
+pinginterface "WAN1" "$WAN1NAME" "$ISP1NAME"
 WAN1_INTERNET=$WAN_RESULT
 
 echo "$WAN2NAME ISP 2: $ISP2NAME"
-pinginterface "$WAN2NAME" "$ISP2NAME"
+pinginterface "WAN2" "$WAN2NAME" "$ISP2NAME"
 WAN2_INTERNET=$WAN_RESULT
 
 echo "$WAN3NAME ISP 3: $ISP3NAME"
-pinginterface "$WAN3NAME" "$ISP3NAME"
+pinginterface "WAN3" "$WAN3NAME" "$ISP3NAME"
 WAN3_INTERNET=$WAN_RESULT
 
 if [[ "$WAN1_INTERNET" = "OFFLINE" && "$WAN2_INTERNET" = "ONLINE" ]]
@@ -68,13 +68,13 @@ then
   fi
 fi
 
-echo "$WAN1NAME INTERNET: $WAN1_INTERNET"
+echo "WAN1 INTERNET: $WAN1_INTERNET"
 echo "$WAN1NAME" metric is: "$(get_metric "$WAN1NAME")"
 
-echo "$WAN2NAME INTERNET: $WAN2_INTERNET"
+echo "WAN2 INTERNET: $WAN2_INTERNET"
 echo "$WAN2NAME" metric is: "$(get_metric "$WAN2NAME")"
 
-echo "$WAN3NAME INTERNET: $WAN3_INTERNET"
+echo "WAN3 INTERNET: $WAN3_INTERNET"
 echo "$WAN3NAME" metric is: "$(get_metric "$WAN3NAME")"
 
 check_ip_change

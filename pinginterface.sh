@@ -3,15 +3,16 @@
 source /root/colors.ini
 
 pinginterface() {
+WAN_name=$1
+WAN=$2
+ISP=$3
 
-if [ "$1" != "none" ]
+if [ "$WAN" != "none" ]
 then
-  WAN=$1
-  ISP=$2
   WAN_IP=$(get_interface_ip "$WAN")
   WAN_PROTO=$(get_interface_proto "$WAN")
   echo "$WAN IP: $WAN_IP $WAN_PROTO"
-  get_wan_status "$WAN"
+  get_wan_status "$WAN_name"
   WAN_PREV_STATUS=$WAN_STATUS
 
   if [ "$WAN_IP" = "" ]
@@ -23,7 +24,7 @@ then
       $SENDMAIL "$WAN IP not assigned" "ISP: $ISP, proto: $WAN_PROTO"
     fi
 
-    set_wan_status "$WAN" "NONE"
+    set_wan_status "$WAN_name" "NONE"
     WAN_RESULT="NONE"
   fi
 
@@ -85,7 +86,7 @@ then
     if [ $COUNTPING -gt 0 ]
     then
       echo -e "$Color_GREENB$WAN Internet is online on interface $WANIF$Color_BLACK"
-      set_wan_status "$WAN" "ONLINE"
+      set_wan_status "$WAN_name" "ONLINE"
       WAN_RESULT="ONLINE"
       if [ "$WAN_PREV_STATUS" = "OFFLINE" ] || [ "$WAN_PREV_STATUS" = "NONE" ]
       then
@@ -93,7 +94,7 @@ then
       fi
     else
       echo -e "$Color_REDB$WAN Internet is offline on interface $WANIF$Color_BLACK"
-      set_wan_status "$WAN" "OFFLINE"
+      set_wan_status "$WAN_name" "OFFLINE"
       WAN_RESULT="OFFLINE"
       ifdown "$WAN"
       sleep 1s
@@ -103,7 +104,8 @@ then
 
   fi
 else
-  WAN_RESULT="NONE"
+  WAN_RESULT=""
+  set_wan_status "$WAN_name" $WAN_RESULT
 fi
 echo 
 }
