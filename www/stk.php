@@ -11,12 +11,12 @@ function echoln($string) {
   echo $string . PHP_EOL;
 }
 
-
   $name = array();
   $interface = array();
   $ips = array();
 
   $pingtofile = trim(file_get_contents('./pingtofile'));
+  $maxlines = trim(file_get_contents('./maxlines'));
 
   $lines = file($pingtofile);
 
@@ -33,15 +33,27 @@ function echoln($string) {
   }
 
   echoln ('<body>');
+
+  $linecount = $maxlines;
+
+  $tableheader = '<tr><th>Num</th><th>Device</th><th>Interface</th><th>IP address</th><th>Ping status</th>';
   echoln ('<table>');
-  echoln ('<tr><th>Num</th><th>Device</th><th>Interface</th><th>IP address</th><th>Ping status</th>');
+  echoln ($tableheader);
   foreach ($ips as $num => $ip) {
     $ping = (ping($ip)) ? 'ping OK' : 'NO ping';
     $pingclass = ($ping == 'ping OK') ? 'online' : 'offline';
     echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $name[$num] . '</td><td>' . $interface[$num] . '</td><td>' . $ip . '</td><td class="' . $pingclass . '">' . $ping . '</td></tr>');
+    if ($linecount < sizeof($ips)) {
+      if (($num+1) == $linecount) {
+        echoln ('</table>');
+        echoln ('<table>');
+        echoln ($tableheader);
+        $linecount = $linecount + $maxlines;
+      }
+    }
   }
-
   echoln ('</table>');
+
   echoln ('</body>');
   echoln ('</html>');
 

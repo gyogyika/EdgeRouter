@@ -9,7 +9,7 @@
   <style>
 body {
   Font-family: Arial;
-  Font-size: 0.8em;
+  Font-size: 1em;
 }
 
 table {
@@ -24,6 +24,7 @@ table {
 td {
   /*padding-top: 10px;*/
   padding-left: 10px;
+  margin: 0px;
 }
 
 tr:hover {
