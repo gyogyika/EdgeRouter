@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Ping status</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="30" />
+  <style>
+body {
+  Font-family: Arial;
+}
+
+table {
+  border: 1px solid black;
+  width: 700px;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+td, th {
+  padding: 10px;
+}
+
+.ok {
+  position: relative;
+  background-color: darkgreen;
+  color: lightgray;
+}
+
+.warn {
+  position: relative;
+  background-color: darkorange;
+  color: black;
+}
+
+.error {
+  position: relative;
+  background-color: red;
+  color: black;
+}
+
+.warn-color {
+  color: #e67e00; /*darkorange*/
+  border: 2px solid #e67e00;
+}
+
+.error-color {
+  color: red;
+  border: 2px solid red;
+}
+
+th {
+  background-color: #e8e8e8;
+}
+
+td:first-child {
+  /*width: 100px;*/
+}
+
+td.log {
+  height: 100px;
+  width: 10px;
+  vertical-align: bottom;
+}
+
+.online {
+  /*color: #99ff99;*/
+  background-color: #99FF99;
+}
+
+.offline {
+  /*color: #ff9999;*/
+  background-color: #FF9999;
+}
+
+.offline-table {
+  background-color: #FACACB;
+}
+
+.cursor-help {
+  cursor: help;
+}
+
+
+  </style>
+</head>
