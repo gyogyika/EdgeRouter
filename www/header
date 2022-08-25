@@ -17,10 +17,16 @@ table {
   float: left;
   margin-right: 5px;
   margin-bottom: 5px;
+  padding: 0px;
 }
 
 td, th {
-  padding: 10px;
+  /*padding-top: 10px;*/
+  padding: 0px;
+}
+
+tr:hover {
+  background-color: rgba(2,100,161, 0.2);
 }
 
 .ok {
@@ -57,6 +63,7 @@ th {
 
 td:first-child {
   /*width: 100px;*/
+  text-align: right;
 }
 
 td.log {
