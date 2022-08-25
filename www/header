@@ -9,20 +9,21 @@
   <style>
 body {
   Font-family: Arial;
+  Font-size: 0.8em;
 }
 
 table {
   border: 1px solid black;
-  width: 700px;
+  /*width: 700px;*/
   float: left;
-  margin-right: 5px;
-  margin-bottom: 5px;
+  /*margin-right: 5px;*/
+  /*margin-bottom: 5px;*/
   padding: 0px;
 }
 
-td, th {
+td {
   /*padding-top: 10px;*/
-  padding: 0px;
+  padding-left: 10px;
 }
 
 tr:hover {
