@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <title>Ping status</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="30" />
-  <style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="refresh" content="30" />
+<style>
 body {
   Font-family: Arial;
   Font-size: 1em;
@@ -91,7 +91,5 @@ td.log {
 .cursor-help {
   cursor: help;
 }
-
-
-  </style>
+</style>
 </head>
