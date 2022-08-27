@@ -51,6 +51,7 @@ function echoln($string) {
         $linecount = $linecount + $maxlines;
       }
     }
+    if ($ping == 'NO ping') flush();
   }
   echoln ('</table>');
 
