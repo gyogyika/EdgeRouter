@@ -5,21 +5,27 @@ source /root/utils
 
 get_wan_status "WAN1"
 WAN1_STATUS=$WAN_STATUS
+echo WAN1: $WAN1_STATUS
 
 get_wan_status "WAN2"
 WAN2_STATUS=$WAN_STATUS
+echo WAN2: $WAN2_STATUS
 
 get_wan_status "WAN3"
 WAN3_STATUS=$WAN_STATUS
+echo WAN3: $WAN3_STATUS
 
 NOPINGS="invalid"
 read -r NOPINGS < "/tmp/NOPINGS"
+echo NOPINGS: $NOPINGS
 
 SPEEDTEST="invalid"
 read -r SPEEDTEST < "/tmp/SPEEDTEST"
+echo SPEEDTEST: $SPEEDTEST
 
 VPNCLIENTS="invalid"
 VPNCLIENTS=$(awk '{print}' "/tmp/VPNCLIENTS") #multiline read
+echo VPNCLIENTS: $VPNCLIENTS
 
 DHCP_LEASES=$(awk 'END{print NR}' "/tmp/dhcp.leases")
 echo DHCP Leases: $DHCP_LEASES
