@@ -46,6 +46,10 @@ Pingto() {
  then
    echo -e '\n'"No ping to:"'\n'"$MESSAGE_LINE"
    $SENDMAIL "ping none $NO_PING_COUNTER: $NO_PING_DEVICE"  "$MESSAGE_LINE"
+ fi
+
+ if [ $NO_PING_COUNTER -gt 0 ]
+ then
    echo -e $NO_PING_DEVICE > $NOPINGS
  fi
 }
