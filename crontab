@@ -1,6 +1,7 @@
-*/1	*	*	*	*	root	/root/cron1minute.sh
-*/5	*	*	*	*	root	/root/cron5minute.sh
-*/10	*	*	*	*	root	/root/cron10minute.sh
-0	*	*	*	*	root	/root/cron60minute.sh
-0	0	*	*	7	root	reboot
-@reboot root	bash /root/StartUp.sh
+*/1	*	*	*	*	bash	/root/WANtest.sh
+*/1	*	*	*	*	bash	/root/cron1minute.sh
+*/5	*	*	*	*	bash	/root/cron5minute.sh
+*/10	*	*	*	*	bash	/root/cron10minute.sh
+0	*	*	*	*	bash	/root/cron60minute.sh
+0	20	*	*	*	bash	/root/Update.sh #Router update shell script
+15	0	*	*	*	reboot #Reboot router daily at 0:15
