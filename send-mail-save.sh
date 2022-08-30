@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source /root/settings.ini
 SAVE_DIR="/tmp/spool/sendmail/"
 SMCF="/tmp/savemail_counter"
 
@@ -31,7 +32,7 @@ SaveMail() {
 }
 
 get_server_status() {
-  STATUS=$(curl --max-time 2 --silent --get --data-urlencode "test=test" "$SENDMAIL_URL")
+  STATUS=$(curl --max-time $CURL_TIMEOUT --silent --get --data-urlencode "test=test" "$SENDMAIL_URL")
 }
 
 SendMail() {
@@ -43,7 +44,7 @@ SendMail() {
   if [ "$STATUS" = "OK" ]
   then
     printf "%s" "${FUNCNAME[0]}(): "
-    curl --max-time 5 --silent --get \
+    curl --max-time $CURL_TIMEOUT --silent --get \
       --data-urlencode "from=$SENDMAIL_FROM" \
       --data-urlencode "subject=$SUBJECT" \
       --data-urlencode "message=$MESSAGE" \

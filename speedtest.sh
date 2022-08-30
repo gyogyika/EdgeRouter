@@ -2,6 +2,8 @@
 
 source /root/settings.ini
 
+sleep $SLEEP
+
 read -r IPERF3_PORT < "$IPERF3_PORT_FILE"
 
 echo "Iperf3 port: ""$IPERF3_PORT"

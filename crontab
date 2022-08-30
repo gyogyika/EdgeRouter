@@ -1,0 +1,6 @@
+*/1	*	*	*	*	root	/root/cron1minute.sh
+*/5	*	*	*	*	root	/root/cron5minute.sh
+*/10	*	*	*	*	root	/root/cron10minute.sh
+0	*	*	*	*	root	/root/cron60minute.sh
+0	0	*	*	7	root	reboot
+@reboot root	bash /root/StartUp.sh
