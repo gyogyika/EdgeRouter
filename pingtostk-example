@@ -34,3 +34,6 @@ R031/Z23 br-lan 192.168.1.234
 R032 br-lan 192.168.1.235
 orangepi31 br-lan 192.168.1.207
 orangepi32 br-lan 192.168.1.208
+
+STKService eth0.5 stk.testek.sk
+PEKService eth0.5 aisek.sekait.sk
