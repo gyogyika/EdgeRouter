@@ -15,6 +15,10 @@ function echobrln($string) {
   echo $string . '<br />' . PHP_EOL;
 }
 
+function GET($index, $defaultValue) {
+  return isset($_GET[$index]) ? $_GET[$index] : $defaultValue;
+}
+
   echoln ('<body>');
   echoln ('<div id="page">');
   echoln ('<div id="page-sub">');
@@ -40,6 +44,10 @@ function echobrln($string) {
       }
   }
 
+  $get = GET('kamery', 'not set');
+
+  if ($get == '') {
+
   if (!file_exists('/tmp/NVRimages')) {
     mkdir('/tmp/NVRimages');
   } else {
@@ -64,7 +72,8 @@ function echobrln($string) {
         $camimages[] = $camfilename;
         $camip = trim($pieces[1]);
         exec('wget -P /tmp/NVRimages -O ' . $camfilename . ' http://' . $camspass . '@' . $camip . '/ISAPI/Streaming/channels/101/picture');
-        echo $pieces[0] . ' ';
+        //echo $pieces[0] . ' ';
+        echoln ('<img title="' . $camfilename . '" id="' . $camfilename . '" onclick="picturezoomin(\'' . $camfilename . '\')" width="200" height="113" src="' . $camfilename . '" />');
         flush();
         if (!is_link($camfilename)) {
           if (symlink('/tmp/NVRimages/' . $camfilename, $camfilename)) {
@@ -74,6 +83,9 @@ function echobrln($string) {
         }
       }
     }
+
+  }
+
   echoln ('</div>');
   $linecount = $maxlines;
 
@@ -96,13 +108,11 @@ function echobrln($string) {
   }
   echoln ('</table>');
 
-  foreach ($camimages as $camimagefile) {
-    echoln ('<img title="' . $camimagefile . '" id="' . $camimagefile . '" onclick="picturezoomin(\'' . $camimagefile . '\')" width="200" height="113" src="' . $camimagefile . '" />');
-  }
-
   echoln ('</div>');
 
   echoln ('<img id="bigimage" src="" onclick="hideimage()" />');
+
+  echoln ('<a href="?kamery"><button>Kamery</button></a>');
 
   echoln ('</body>');
   echoln ('</html>');
