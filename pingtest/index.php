@@ -11,12 +11,20 @@ function echoln($string) {
   echo $string . PHP_EOL;
 }
 
+function echobrln($string) {
+  echo $string . '<br />' . PHP_EOL;
+}
+
+  echoln ('<body>');
+  echoln ('<div id="page">');
+  echoln ('<div id="page-sub">');
+
   $name = array();
   $interface = array();
   $ips = array();
 
-  $pingtofile = trim(file_get_contents('./pingtofile'));
-  $maxlines = trim(file_get_contents('./maxlines'));
+  $pingtofile = trim(file_get_contents('pingtofile'));
+  $maxlines = trim(file_get_contents('maxlines'));
 
   $lines = file($pingtofile);
 
@@ -32,8 +40,41 @@ function echoln($string) {
       }
   }
 
-  echoln ('<body>');
+  if (!file_exists('/tmp/NVRimages')) {
+    mkdir('/tmp/NVRimages');
+  } else {
+      $files = glob('/tmp/NVRimages/*'); // get all file names
+      foreach($files as $file) { // iterate files
+        if (is_file($file)) {
+          unlink($file); // delete file
+        }
+      }
+    }
 
+  $cams = file('cams');
+  $camspass = trim(file_get_contents('camspass'));
+  $camimages = array();
+
+  foreach ($cams as $line_num => $cam) {
+    if ((strpos($cam, '#') === 0) or (trim($cam) == '')) {
+      unset($cams[$line_num]);
+    } else {
+        $pieces = explode('=', $cam);
+        $camfilename = trim($pieces[0] . '.jpg');
+        $camimages[] = $camfilename;
+        $camip = trim($pieces[1]);
+        exec('wget -P /tmp/NVRimages -O ' . $camfilename . ' http://' . $camspass . '@' . $camip . '/ISAPI/Streaming/channels/101/picture');
+        echo $pieces[0] . ' ';
+        flush();
+        if (!is_link($camfilename)) {
+          if (symlink('/tmp/NVRimages/' . $camfilename, $camfilename)) {
+            echobrln ($camfilename . ' symlink created.');
+            flush();
+          }
+        }
+      }
+    }
+  echoln ('</div>');
   $linecount = $maxlines;
 
   $tableheader = '<tr><th>Num</th><th>Device</th><th>Interface</th><th>IP address</th><th>Ping status</th>';
@@ -54,6 +95,14 @@ function echoln($string) {
     if ($ping == 'NO ping') flush();
   }
   echoln ('</table>');
+
+  foreach ($camimages as $camimagefile) {
+    echoln ('<img title="' . $camimagefile . '" id="' . $camimagefile . '" onclick="picturezoomin(\'' . $camimagefile . '\')" width="200" height="113" src="' . $camimagefile . '" />');
+  }
+
+  echoln ('</div>');
+
+  echoln ('<img id="bigimage" src="" onclick="hideimage()" />');
 
   echoln ('</body>');
   echoln ('</html>');
