@@ -2,8 +2,8 @@
 
 include_once 'header';
 
-function ping($host) {
-  exec(sprintf('ping -c1 -W1 %s', escapeshellarg(trim($host))), $res, $rval);
+function ping($host, $interface) {
+  exec(sprintf('ping -c1 -W1 -I ' . $interface . ' ' . $host), $res, $rval);
   return $rval === 0;
 }
 
@@ -93,7 +93,7 @@ function GET($index, $defaultValue) {
   echoln ('<table>');
   echoln ($tableheader);
   foreach ($ips as $num => $ip) {
-    $ping = (ping($ip)) ? 'ping OK' : 'NO ping';
+    $ping = (ping($ip, $interface[$num])) ? 'ping OK' : 'NO ping';
     $pingclass = ($ping == 'ping OK') ? 'online' : 'offline';
     echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $name[$num] . '</td><td>' . $interface[$num] . '</td><td>' . $ip . '</td><td class="' . $pingclass . '">' . $ping . '</td></tr>');
     if ($linecount < sizeof($ips)) {
