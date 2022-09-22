@@ -33,7 +33,8 @@ function GET($index, $defaultValue) {
   $lines = file($pingtofile);
 
   foreach ($lines as $line_num => $line) {
-    if ((strpos($line, '#') === 0) or (trim($line) == '')) {
+    $line = trim($line);
+    if ((strpos($line, '#') === 0) or ($line == '')) {
       unset($lines[$line_num]);
     } else {
         $pieces = explode(' ', $line);
