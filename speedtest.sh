@@ -2,26 +2,40 @@
 
 source /root/settings.ini
 
-sleep $SLEEP
+sleep "$SLEEP"
 
 read -r IPERF3_PORT < "$IPERF3_PORT_FILE"
-
-echo "Iperf3 port: ""$IPERF3_PORT"
 
 DOWNLOADSPEED=""
 UPLOADSPEED=""
 COUNTDOWNLOAD=0
 COUNTUPLOAD=0
 
+if [ -z "$IPERF3_START_PORT" ]
+then
+  IPERF3_START_PORT="5200"
+fi
+
+if [ -z "$IPERF3_END_PORT" ]
+then
+  IPERF3_END_PORT="5209"
+fi
+
+if [ -z "$IPERF3_PORT" ]
+then
+  IPERF3_PORT=$IPERF3_START_PORT
+fi
+
+echo "Iperf3 port: ""$IPERF3_PORT"
+
 incport() {
   IPERF3_PORT=$((IPERF3_PORT+1))
-  if [ $IPERF3_PORT -gt 5209 ] || [ $IPERF3_PORT -lt 5200 ]
+  if [ $IPERF3_PORT -gt "$IPERF3_END_PORT" ] || [ $IPERF3_PORT -lt "$IPERF3_START_PORT" ]
   then
-    IPERF3_PORT=5200
+    IPERF3_PORT=$IPERF3_START_PORT
   fi
-  echo $IPERF3_PORT > "$IPERF3_PORT_FILE"
+  echo "$IPERF3_PORT" > "$IPERF3_PORT_FILE"
 }
-
 
 while [ -z "$DOWNLOADSPEED" ] && [ $COUNTDOWNLOAD -lt 15 ]
 do
@@ -31,7 +45,7 @@ do
  echo Download speed: ="$DOWNLOADSPEED"=
  if [ -z "$DOWNLOADSPEED" ]
  then
-  sleep 3
+  sleep 5
   incport
  fi
 done
@@ -46,7 +60,7 @@ do
  echo Upload speed: ="$UPLOADSPEED"=
  if [ -z "$UPLOADSPEED" ]
  then
-  sleep 3
+  sleep 5
   incport
  fi
 done
