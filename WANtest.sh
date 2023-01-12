@@ -16,10 +16,25 @@ echo "$WAN3NAME ISP 3: $ISP3NAME"
 pinginterface "WAN3" "$WAN3NAME" "$ISP3NAME"
 WAN3_INTERNET=$WAN_RESULT
 
+if [[ "$WAN1_INTERNET" = "NONE" ]]
+then
+  WAN1_INTERNET="OFFLINE"
+fi
+
+if [[ "$WAN2_INTERNET" = "NONE" ]]
+then
+  WAN2_INTERNET="OFFLINE"
+fi
+
+if [[ "$WAN3_INTERNET" = "NONE" ]]
+then
+  WAN3_INTERNET="OFFLINE"
+fi
+
 if [[ "$WAN1_INTERNET" = "OFFLINE" && "$WAN2_INTERNET" = "ONLINE" ]]
 then
   #echo WAN1 offline, WAN2 online.
-  if [ "$(get_metric "$WAN1NAME")" = 0 ]
+  if [ "$(get_metric "$WAN1NAME")" != 20 ] || [ "$(get_metric "$WAN2NAME")" != 1 ]
   then
     set_metric "$WAN1NAME" "20"
     set_metric "$WAN2NAME" "1"
@@ -31,7 +46,7 @@ fi
 if [[ "$WAN1_INTERNET" = "OFFLINE" && "$WAN2_INTERNET" = "OFFLINE" && "$WAN3_INTERNET" = "ONLINE" ]]
 then
   #echo WAN1 offline, WAN2 offline, WAN3 online.
-  if [ "$(get_metric "$WAN1NAME")" = 0 ] || [ "$(get_metric "$WAN2NAME")" = 1 ]
+  if [ "$(get_metric "$WAN1NAME")" != 20 ] || [ "$(get_metric "$WAN2NAME")" != 30 ]
   then
     set_metric "$WAN1NAME" "20"
     set_metric "$WAN2NAME" "30"
