@@ -56,7 +56,10 @@ UPS=$(upsc ups)
 UPS_model=$(echo "$UPS" | awk '/ups.model:/{$1="";print $0}')
 echo "UPS_model: $UPS_model"
 
-UPS_battery_date=$(echo "$UPS" | awk '/battery.mfr.date:/{$1="";print $0}')
+if [ -z "$UPS_battery_date" ]
+then
+  UPS_battery_date=$(echo "$UPS" | awk '/battery.mfr.date:/{$1="";print $0}')
+fi
 echo "UPS_battery_date: $UPS_battery_date"
 
 UPS_battery_charge=$(echo "$UPS" | awk '/battery.charge:/{$1="";print $0}')
