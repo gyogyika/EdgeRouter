@@ -23,7 +23,7 @@ while read -r line; do
     exit 0
   fi
 
-done < "/root/openvpn/servertun/authusers"
+done < "/root/openvpn/servertap/authusers"
 
 echo "not ok"
 $SENDMAIL "OpenVPN auth failed: $USERNAME" "OpenVPN auth failed. Username: $USERNAME, password: $PASSWORD"
