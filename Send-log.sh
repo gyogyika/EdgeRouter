@@ -7,7 +7,12 @@ source /root/settings.ini
 FILE1="/tmp/Send-log-current.log"
 FILE2="/tmp/Send-log-previous.log"
 
-grep -E 'kern|auth|user.' /tmp/system.log | tail -n20 > $FILE1
+if [ -z "$SEND_LOG_GREP" ]
+then
+  SEND_LOG_GREP="kern|auth|user\."
+fi
+
+grep -E "$SEND_LOG_GREP" /tmp/system.log | tail -n20 > $FILE1
 #daemon.info
 
 if cmp -s "$FILE1" "$FILE2"
