@@ -19,6 +19,14 @@ NOPINGS="invalid"
 read -r NOPINGS < "/tmp/NOPINGS"
 echo NOPINGS: $NOPINGS
 
+NOPINGS_CRIT="invalid"
+read -r NOPINGS_CRIT < "/tmp/NOPINGS_CRIT"
+echo NOPINGS_CRIT: $NOPINGS_CRIT
+
+PINGS="invalid"
+read -r PINGS < "/tmp/PINGS"
+echo PINGS: $PINGS
+
 SPEEDTEST="invalid"
 read -r SPEEDTEST < "/tmp/SPEEDTEST"
 echo SPEEDTEST: $SPEEDTEST
@@ -66,7 +74,9 @@ curl --get \
   --data-urlencode "WAN1=$WAN1_STATUS" \
   --data-urlencode "WAN2=$WAN2_STATUS" \
   --data-urlencode "WAN3=$WAN3_STATUS" \
+  --data-urlencode "PINGS=$PINGS" \
   --data-urlencode "NOPINGS=$NOPINGS" \
+  --data-urlencode "NOPINGS_CRIT=$NOPINGS_CRIT" \
   --data-urlencode "Memory_load=$Memory_load" \
   --data-urlencode "time=$TIME" \
   --data-urlencode "SPEEDTEST=$SPEEDTEST" \
