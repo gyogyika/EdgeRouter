@@ -1,6 +1,6 @@
 <?php
 
-include_once 'header';
+include_once 'header.php';
 
 function ping($host, $interface) {
   exec(sprintf('ping -c1 -W1 -I ' . $interface . ' ' . $host), $res, $rval);
@@ -113,7 +113,22 @@ function GET($index, $defaultValue) {
 
   echoln ('<img id="bigimage" src="" onclick="hideimage()" />');
 
-  echoln ('<a href="?kamery"><button>Kamery</button></a>');
+  $camslinka = explode("\n", file_get_contents('camslinka'));
+  foreach ($camslinka as $line) {
+    $attr = explode(' ', trim($line));
+
+    // if line is empty
+    if (!$attr[0]) continue;
+
+    // if first char is a comment
+    if ($attr[0][0] == '#') continue;
+
+    $loggername = $attr[0];
+    $loggerurl = $attr[1];
+    echobrln ('<a target="_blank" href="' . $loggerurl . '"><button>' . $loggername . '</button></a>');
+  }
+
+  //echoln ('<a href="?kamery"><button>Kamery</button></a>');
 
   echoln ('</body>');
   echoln ('</html>');
