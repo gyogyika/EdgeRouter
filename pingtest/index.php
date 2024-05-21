@@ -8,26 +8,20 @@ require 'utils.inc';
   echoln ('<div id="page">');
   echoln ('<div id="page-sub">');
 
-  $name = array();
-  $interface = array();
+  $names = array();
+  $interfaces = array();
   $ips = array();
 
-  $pingtofile = trim(file_get_contents('pingtofile'));
   $maxlines = trim(file_get_contents('maxlines'));
 
-  $lines = file($pingtofile);
+  $pingtofile = trim(file_get_contents('pingtofile'));
+  $lines = array();
+  $lines = inifileprocess($pingtofile, ' ');
 
-  foreach ($lines as $line_num => $line) {
-    $line = trim($line);
-    if ((strpos($line, '#') === 0) or ($line == '')) {
-      unset($lines[$line_num]);
-    } else {
-        $pieces = explode(' ', $line);
-        #echo $pieces[2] . "<br />\n";
-        $name[] = trim($pieces[0]);
-        $interface[] = trim($pieces[1]);
-        $ips[] = trim($pieces[2]);
-      }
+  foreach ($lines as $line) {
+    $names[] = $line[0];
+    $interfaces[] = $line[1];
+    $ips[] = $line[2];
   }
 
   $get = GET('kamery', 'not set');
@@ -75,28 +69,29 @@ require 'utils.inc';
   echoln ('</div>');
   $linecount = $maxlines;
 
+  $services = array();
   $services = inifileprocess('services',' ');
 
   $tableheader = '<tr><th>Num</th><th>Device</th><th>Interface</th><th>IP address</th><th>Ping status</th><th>Services</th></tr>';
   echoln ('<table>');
   echoln ($tableheader);
   foreach ($ips as $num => $ip) {
-    $ping = (ping($ip, $interface[$num])) ? 'ping OK' : 'NO ping';
+    $ping = (ping($ip, $interfaces[$num])) ? 'ping OK' : 'NO ping';
     $pingclass = ($ping == 'ping OK') ? 'online' : 'offline';
     $detected_services = '';
 
-    foreach ($services as $service) {
-      $serviceport = $service[0];
-      $servicename = $service[1];
-      $servicename2 = $service[2];
-      if ($ping == 'ping OK') {
-        if (portopen($ip, $serviceport)) {
-          $detected_services .= '<span title="' . $servicename . '">' . $servicename2 . '</span>' . ' ';
-        }
+    if ($ping == 'ping OK') {
+      foreach ($services as $service) {
+        $serviceport = $service[0];
+        $servicename = $service[1];
+        $servicename2 = $service[2];
+          if (portopen($ip, $serviceport)) {
+            $detected_services .= '<span title="' . $servicename . '">' . $servicename2 . '</span>' . ' ';
+          }
       }
     }
 
-    echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $name[$num] . '</td><td>' . $interface[$num] . '</td><td>' . $ip . '</td><td class="' . $pingclass . '">' . $ping . '</td><td>' . $detected_services . '</td></tr>');
+    echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $names[$num] . '</td><td>' . $interfaces[$num] . '</td><td>' . $ip . '</td><td class="' . $pingclass . '">' . $ping . '</td><td>' . $detected_services . '</td></tr>');
     if ($linecount < sizeof($ips)) {
       if (($num+1) == $linecount) {
         echoln ('</table>');
@@ -107,10 +102,9 @@ require 'utils.inc';
     }
     if ($ping == 'NO ping') flush();
   }
+
   echoln ('</table>');
-
   echoln ('</div>');
-
   echoln ('<img id="bigimage" src="" onclick="hideimage()" />');
 
   $loggers = inifileprocess('loggers',' ');
