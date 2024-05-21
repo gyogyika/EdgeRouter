@@ -1,0 +1,11 @@
+#max. 8 services for test to not invoke ESET firewall
+22 SSH-22 s
+53 Domain-53 d
+80 HTTP-80 w
+222 Dropbear-222 sd
+443 HTTPS-443 ws
+#445 microsoft-ds-445 ds
+1024 ServiceWeb-1024 x
+5900 VNC-5900 v
+#9000 cslistener-9000 c
+9100 jetdirect-9100 j

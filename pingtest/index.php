@@ -1,6 +1,8 @@
 <?php
 
 include_once 'header.php';
+require 'fsock.inc';
+require 'utils.inc';
 
 function ping($host, $interface) {
   exec(sprintf('ping -c1 -W1 -I ' . $interface . ' ' . $host), $res, $rval);
@@ -90,13 +92,28 @@ function GET($index, $defaultValue) {
   echoln ('</div>');
   $linecount = $maxlines;
 
-  $tableheader = '<tr><th>Num</th><th>Device</th><th>Interface</th><th>IP address</th><th>Ping status</th>';
+  $services = inifileprocess('services',' ');
+
+  $tableheader = '<tr><th>Num</th><th>Device</th><th>Interface</th><th>IP address</th><th>Ping status</th><th>Services</th></tr>';
   echoln ('<table>');
   echoln ($tableheader);
   foreach ($ips as $num => $ip) {
     $ping = (ping($ip, $interface[$num])) ? 'ping OK' : 'NO ping';
     $pingclass = ($ping == 'ping OK') ? 'online' : 'offline';
-    echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $name[$num] . '</td><td>' . $interface[$num] . '</td><td>' . $ip . '</td><td class="' . $pingclass . '">' . $ping . '</td></tr>');
+    $detected_services = '';
+
+    foreach ($services as $service) {
+      $serviceport = $service[0];
+      $servicename = $service[1];
+      $servicename2 = $service[2];
+      if ($ping == 'ping OK') {
+        if (portopen($ip, $serviceport)) {
+          $detected_services .= '<span title="' . $servicename . '">' . $servicename2 . '</span>' . ' ';
+        }
+      }
+    }
+
+    echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $name[$num] . '</td><td>' . $interface[$num] . '</td><td>' . $ip . '</td><td class="' . $pingclass . '">' . $ping . '</td><td>' . $detected_services . '</td></tr>');
     if ($linecount < sizeof($ips)) {
       if (($num+1) == $linecount) {
         echoln ('</table>');
@@ -113,18 +130,10 @@ function GET($index, $defaultValue) {
 
   echoln ('<img id="bigimage" src="" onclick="hideimage()" />');
 
-  $camslinka = explode("\n", file_get_contents('camslinka'));
-  foreach ($camslinka as $line) {
-    $attr = explode(' ', trim($line));
-
-    // if line is empty
-    if (!$attr[0]) continue;
-
-    // if first char is a comment
-    if ($attr[0][0] == '#') continue;
-
-    $loggername = $attr[0];
-    $loggerurl = $attr[1];
+  $loggers = inifileprocess('loggers',' ');
+  foreach ($loggers as $logger) {
+    $loggername = $logger[0];
+    $loggerurl = $logger[1];
     echobrln ('<a target="_blank" href="' . $loggerurl . '"><button>' . $loggername . '</button></a>');
   }
 
