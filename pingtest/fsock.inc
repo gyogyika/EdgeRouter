@@ -1,6 +1,6 @@
 <?php
 
-echo 'fsock.inc included.<br>';
+//echo 'fsock.inc included.<br>';
 
 function portopen($host, $port) {
   $connection = @fsockopen(trim($host), trim($port), $errno, $errstr, 0.1);
