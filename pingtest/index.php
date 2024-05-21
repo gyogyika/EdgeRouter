@@ -4,23 +4,6 @@ include_once 'header.php';
 require 'fsock.inc';
 require 'utils.inc';
 
-function ping($host, $interface) {
-  exec(sprintf('ping -c1 -W1 -I ' . $interface . ' ' . $host), $res, $rval);
-  return $rval === 0;
-}
-
-function echoln($string) {
-  echo $string . PHP_EOL;
-}
-
-function echobrln($string) {
-  echo $string . '<br />' . PHP_EOL;
-}
-
-function GET($index, $defaultValue) {
-  return isset($_GET[$index]) ? $_GET[$index] : $defaultValue;
-}
-
   echoln ('<body>');
   echoln ('<div id="page">');
   echoln ('<div id="page-sub">');
