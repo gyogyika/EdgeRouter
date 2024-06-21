@@ -1,8 +1,8 @@
 <?php
 
 include_once 'header.php';
-require 'fsock.inc';
-require 'utils.inc';
+require 'fsock.php';
+require 'utils.php';
 
   echoln ('<body>');
   echoln ('<div id="page">');
@@ -25,6 +25,26 @@ require 'utils.inc';
   }
 
   $get = GET('kamery', 'not set');
+  $wol_ip = GET('wol', 'not set');
+  $ignoreping_ip = GET('ignorepingip', 'not set');
+
+  if ($wol_ip <> 'not set') {
+    echo '<div class="color-white">';
+    echo 'WOL IP: ' . $wol_ip . ', ';
+    $mac = getmacbyip($wol_ip);
+    echo 'MAC: ' . $mac . ', ';
+    if ($mac <> '') {
+      $output=null;
+      $retval=null;
+      exec('etherwake -i "br-lan" ' . $mac, $output, $retval);
+      if ($retval <> 0) echo 'etherwake is not installed.';
+    }
+    echo '</div>';
+  }
+
+  if ($ignoreping_ip <> 'not set') {
+    //echo '$ignoreping_ip: ' . $ignoreping_ip;
+  }
 
   if ($get == '') {
 
@@ -76,11 +96,18 @@ require 'utils.inc';
   echoln ('<table>');
   echoln ($tableheader);
   foreach ($ips as $num => $ip) {
-    $ping = (ping($ip, $interfaces[$num])) ? 'ping OK' : 'NO ping';
-    $pingclass = ($ping == 'ping OK') ? 'online' : 'offline';
+    if ( ($ip <> $ignoreping_ip) and ($ignoreping_ip <> 'all') ) {
+      $ping = (ping($ip, $interfaces[$num])) ? 'ping OK' : 'NO ping';
+      $pingclass = ($ping == 'ping OK') ? 'online' : 'offline';
+    }
+    else {
+      $pingclass = 'ignored';
+      $ping = 'Ignored';
+    }
+    
     $detected_services = '';
 
-    if ($ping == 'ping OK') {
+    if ($ping <> 'NO ping') {
       foreach ($services as $service) {
         $serviceport = $service[0];
         $servicename = $service[1];
@@ -91,7 +118,7 @@ require 'utils.inc';
       }
     }
 
-    echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $names[$num] . '</td><td>' . $interfaces[$num] . '</td><td>' . $ip . '</td><td class="' . $pingclass . '">' . $ping . '</td><td>' . $detected_services . '</td></tr>');
+    echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $names[$num] . '</td><td>' . $interfaces[$num] . '</td><td><a href="?wol=' . $ip . '">' . $ip . '</a></td><td class="' . $pingclass . '"><a href="?ignorepingip=' . $ip . '">' . $ping . '</a></td><td>' . $detected_services . '</td></tr>');
     if ($linecount < sizeof($ips)) {
       if (($num+1) == $linecount) {
         echoln ('</table>');
@@ -118,5 +145,4 @@ require 'utils.inc';
 
   echoln ('</body>');
   echoln ('</html>');
-
 ?>

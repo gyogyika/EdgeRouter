@@ -88,6 +88,22 @@ td.log {
   background-color: #FF9999;
 }
 
+.ignored {
+  /*color: #ff9999;*/
+  background-color: #9999FF;
+}
+
+.color-white {
+  color: transparent;
+}
+
+a, 
+a:visited {
+  color: black;
+  text-decoration: none;
+  cursor: auto;
+}
+
 #bigimage {
   background-image: none;
   position: absolute;

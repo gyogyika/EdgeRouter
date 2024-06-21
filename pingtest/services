@@ -1,4 +1,5 @@
-#max. 8 services for test to not invoke ESET firewall
+# Max. 8 services for test to not invoke ESET firewall.
+
 22 SSH-22 s
 53 Domain-53 d
 80 HTTP-80 w
@@ -9,3 +10,4 @@
 5900 VNC-5900 v
 #9000 cslistener-9000 c
 9100 jetdirect-9100 j
+3389 RDP-3389 R
