@@ -118,7 +118,7 @@ require 'utils.php';
       }
     }
 
-    echoln ('<tr><td>' . ($num + 1) . '</td><td>' . $names[$num] . '</td><td>' . $interfaces[$num] . '</td><td><a href="?wol=' . $ip . '">' . $ip . '</a></td><td class="' . $pingclass . '"><a href="?ignorepingip=' . $ip . '">' . $ping . '</a></td><td>' . $detected_services . '</td></tr>');
+    echoln ('<tr><td>' . ($num + 1) . '</td><td><a href="http://' . $ip . '" target="_blank">' . $names[$num] . '</a></td><td>' . $interfaces[$num] . '</td><td><a href="?wol=' . $ip . '">' . $ip . '</a></td><td class="' . $pingclass . '"><a href="?ignorepingip=' . $ip . '">' . $ping . '</a></td><td>' . $detected_services . '</td></tr>');
     if ($linecount < sizeof($ips)) {
       if (($num+1) == $linecount) {
         echoln ('</table>');
