@@ -27,6 +27,15 @@ require 'utils.php';
   $get = GET('kamery', 'not set');
   $wol_ip = GET('wol', 'not set');
   $ignoreping_ip = GET('ignorepingip', 'not set');
+  $skipservices = GET('skipservices', 'not set');
+  $testonly_ip = GET('testonlyip', 'not set');
+
+  $url_saved = '';
+  if ($testonly_ip <> 'not set') {
+    $url_saved .= 'testonlyip=' . $testonly_ip . '&';
+  }
+  
+  //echo $url_saved;
 
   if ($wol_ip <> 'not set') {
     echo '<div class="color-white">';
@@ -92,9 +101,14 @@ require 'utils.php';
   $services = array();
   $services = inifileprocess('services',' ');
 
-  $tableheader = '<tr><th>Num</th><th>Device</th><th>Interface</th><th>IP address</th><th>Ping status</th><th>Services</th></tr>';
+  $tableheader = '<tr><th>Num</th><th>Device</th><th>Interface</th><th>IP address</th><th><a href="?ignorepingip=all">Ping status</a></th><th><a href="?skipservices=yes">Services</a></th></tr>';
   echoln ('<table>');
   echoln ($tableheader);
+  if ($testonly_ip <> 'not set') {
+    $ips2 = array();
+    $ips2[] = $testonly_ip;
+    $ips = array_intersect($ips, $ips2);
+  }
   foreach ($ips as $num => $ip) {
     if ( ($ip <> $ignoreping_ip) and ($ignoreping_ip <> 'all') ) {
       $ping = (ping($ip, $interfaces[$num])) ? 'ping OK' : 'NO ping';
@@ -107,7 +121,7 @@ require 'utils.php';
     
     $detected_services = '';
 
-    if ($ping <> 'NO ping') {
+    if (($ping <> 'NO ping') and ($skipservices <> 'yes')) {
       foreach ($services as $service) {
         $serviceport = $service[0];
         $servicename = $service[1];
@@ -118,7 +132,7 @@ require 'utils.php';
       }
     }
 
-    echoln ('<tr><td>' . ($num + 1) . '</td><td><a href="http://' . $ip . '" target="_blank">' . $names[$num] . '</a></td><td>' . $interfaces[$num] . '</td><td><a href="?wol=' . $ip . '">' . $ip . '</a></td><td class="' . $pingclass . '"><a href="?ignorepingip=' . $ip . '">' . $ping . '</a></td><td>' . $detected_services . '</td></tr>');
+    echoln ('<tr><td><a href="?testonlyip=' . $ip . '">' . ($num + 1) . '</a></td><td><a href="http://' . $ip . '" target="_blank">' . $names[$num] . '</a></td><td>' . $interfaces[$num] . '</td><td><a href="?wol=' . $ip . '">' . $ip . '</a></td><td class="' . $pingclass . '"><a href="?' . $url_saved . 'ignorepingip=' . $ip . '">' . $ping . '</a></td><td>' . $detected_services . '</td></tr>');
     if ($linecount < sizeof($ips)) {
       if (($num+1) == $linecount) {
         echoln ('</table>');

@@ -1,13 +1,17 @@
 # Max. 8 services for test to not invoke ESET firewall.
 
-22 SSH-22 s
 53 Domain-53 d
+22 SSH-22 s
+222 SSH(Dropbear)-222 S
 80 HTTP-80 w
-222 Dropbear-222 sd
-443 HTTPS-443 ws
-#445 microsoft-ds-445 ds
+443 HTTPS-443 W
+554 RTSP-554 r
+445 microsoft-ds-445 M
+#139 microsoft-ds-139 M2
 1024 ServiceWeb-1024 x
 5900 VNC-5900 v
 #9000 cslistener-9000 c
 9100 jetdirect-9100 j
 3389 RDP-3389 R
+37777 Dahua-37777 D
+
