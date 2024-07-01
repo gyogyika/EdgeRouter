@@ -131,8 +131,14 @@ require 'utils.php';
           }
       }
     }
+    if ($testonly_ip == $ip) {
+      $td_ip = '<a href="?wol=' . $ip . '">' . $ip . '</a>';
+    } 
+    else {
+      $td_ip = $ip;
+    }
 
-    echoln ('<tr><td><a href="?testonlyip=' . $ip . '">' . ($num + 1) . '</a></td><td><a href="http://' . $ip . '" target="_blank">' . $names[$num] . '</a></td><td>' . $interfaces[$num] . '</td><td><a href="?wol=' . $ip . '">' . $ip . '</a></td><td class="' . $pingclass . '"><a href="?' . $url_saved . 'ignorepingip=' . $ip . '">' . $ping . '</a></td><td>' . $detected_services . '</td></tr>');
+    echoln ('<tr><td><a href="?testonlyip=' . $ip . '">' . ($num + 1) . '</a></td><td><a href="http://' . $ip . '" target="_blank">' . $names[$num] . '</a></td><td>' . $interfaces[$num] . '</td><td>' . $td_ip . '</td><td class="' . $pingclass . '"><a href="?' . $url_saved . 'ignorepingip=' . $ip . '">' . $ping . '</a></td><td>' . $detected_services . '</td></tr>');
     if ($linecount < sizeof($ips)) {
       if (($num+1) == $linecount) {
         echoln ('</table>');
