@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bash /root/GetIP.sh
+bash /root/freemyip.sh
