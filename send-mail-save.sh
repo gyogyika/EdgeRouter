@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /root/settings.ini
+source /tmp/root/settings.ini
 SAVE_DIR="/tmp/spool/sendmail/"
 SMCF="/tmp/savemail_counter"
 

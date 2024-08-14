@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /root/settings.ini
+source /tmp/root/settings.ini
 
 if [ -n "$FREEMYIP" ]
 then

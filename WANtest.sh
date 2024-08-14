@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source /root/settings.ini
-source /root/pinginterface.sh
-source /root/utils
+source /tmp/root/settings.ini
+source /tmp/root/pinginterface.sh
+source /tmp/root/utils
 
 echo "$WAN1NAME ISP 1: $ISP1NAME"
 pinginterface "WAN1" "$WAN1NAME" "$ISP1NAME"

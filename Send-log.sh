@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /root/settings.ini
+source /tmp/root/settings.ini
 
 #$SENDMAIL "Send-log.sh - test" "test"
 

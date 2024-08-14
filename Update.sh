@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /root/settings.ini
+source /tmp/root/settings.ini
 
 LIST="/tmp/list-upgradable.log"
 

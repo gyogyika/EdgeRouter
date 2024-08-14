@@ -5,44 +5,18 @@ source /tmp/root/utils
 
 get_wan_status "WAN1"
 WAN1_STATUS=$WAN_STATUS
-echo WAN1: $WAN1_STATUS
 
 get_wan_status "WAN2"
 WAN2_STATUS=$WAN_STATUS
-echo WAN2: $WAN2_STATUS
-
-get_wan_status "WAN3"
-WAN3_STATUS=$WAN_STATUS
-echo WAN3: $WAN3_STATUS
-
-MACHINE=$(cat /proc/cpuinfo | awk -F': ' '/machine/ {print $2}')
-echo MACHINE: $MACHINE
-
-SYSTEM_TYPE=$(cat /proc/cpuinfo | awk -F': ' '/system type/ {print $2}')
-echo SYSTEM_TYPE: $SYSTEM_TYPE
-
-CPU_CORES=$(cat /proc/cpuinfo | awk -F: '/processor/ {print $0}' | wc -l)
-echo CPU_CORES: $CPU_CORES
 
 NOPINGS="invalid"
 read -r NOPINGS < "/tmp/NOPINGS"
-echo NOPINGS: $NOPINGS
-
-NOPINGS_CRIT="invalid"
-read -r NOPINGS_CRIT < "/tmp/NOPINGS_CRIT"
-echo NOPINGS_CRIT: $NOPINGS_CRIT
-
-PINGS="invalid"
-read -r PINGS < "/tmp/PINGS"
-echo PINGS: $PINGS
 
 SPEEDTEST="invalid"
 read -r SPEEDTEST < "/tmp/SPEEDTEST"
-echo SPEEDTEST: $SPEEDTEST
 
 VPNCLIENTS="invalid"
 VPNCLIENTS=$(awk '{print}' "/tmp/VPNCLIENTS") #multiline read
-echo VPNCLIENTS: $VPNCLIENTS
 
 DHCP_LEASES=$(awk 'END{print NR}' "/tmp/dhcp.leases")
 echo DHCP Leases: $DHCP_LEASES
@@ -77,54 +51,41 @@ echo "OpenWrt: $OpenWrt"
 
 TIME=$(date +%s)
 
-if [ "$UPS_ENABLED" = "1" ]
-then
-  echo "UPS_ENABLED: $UPS_ENABLED"
-  UPS=$(upsc ups)
+UPS=$(upsc ups)
 
-  UPS_model=$(echo "$UPS" | awk '/ups.model:/{$1="";print $0}')
-  echo "UPS_model: $UPS_model"
+UPS_model=$(echo "$UPS" | awk '/ups.model:/{$1="";print $0}')
+echo "UPS_model: $UPS_model"
 
-  if [ -z "$UPS_battery_date" ]
-  then
-    UPS_battery_date=$(echo "$UPS" | awk '/battery.mfr.date:/{$1="";print $0}')
-  fi
-  echo "UPS_battery_date: $UPS_battery_date"
+UPS_battery_date=$(echo "$UPS" | awk '/battery.mfr.date:/{$1="";print $0}')
+echo "UPS_battery_date: $UPS_battery_date"
 
-  UPS_battery_charge=$(echo "$UPS" | awk '/battery.charge:/{$1="";print $0}')
-  echo "UPS_battery_charge: $UPS_battery_charge"
+UPS_battery_charge=$(echo "$UPS" | awk '/battery.charge:/{$1="";print $0}')
+echo "UPS_battery_charge: $UPS_battery_charge"
 
-  UPS_battery_time=$(echo "$UPS" | awk '/battery.runtime:/{$1="";print $0}')
-  echo "UPS_battery_time: $UPS_battery_time"
+UPS_battery_time=$(echo "$UPS" | awk '/battery.runtime:/{$1="";print $0}')
+echo "UPS_battery_time: $UPS_battery_time"
 
-  UPS_battery_voltage=$(echo "$UPS" | awk '/battery.voltage:/{$1="";print $0}')
-  echo "UPS_battery_voltage: $UPS_battery_voltage"
+UPS_battery_voltage=$(echo "$UPS" | awk '/battery.voltage:/{$1="";print $0}')
+echo "UPS_battery_voltage: $UPS_battery_voltage"
 
-  UPS_load=$(echo "$UPS" | awk '/ups.load:/{$1="";print $0}')
-  echo "UPS_load: $UPS_load"
+UPS_load=$(echo "$UPS" | awk '/ups.load:/{$1="";print $0}')
+echo "UPS_load: $UPS_load"
 
-  UPS_voltage=$(echo "$UPS" | awk '/input.voltage:/{$1="";print $0}')
-  echo "UPS_voltage: $UPS_voltage"
+UPS_voltage=$(echo "$UPS" | awk '/input.voltage:/{$1="";print $0}')
+echo "UPS_voltage: $UPS_voltage"
 
-  UPS_status=$(echo "$UPS" | awk '/ups.status:/{$1="";print $0}')
-  echo "UPS_status: $UPS_status"
+UPS_status=$(echo "$UPS" | awk '/ups.status:/{$1="";print $0}')
+echo "UPS_status: $UPS_status"
 
-  UPS_date=$(echo "$UPS" | awk '/ups.mfr.date:/{$1="";print $0}')
-  echo "UPS_date: $UPS_date"
-fi
+UPS_date=$(echo "$UPS" | awk '/ups.mfr.date:/{$1="";print $0}')
+echo "UPS_date: $UPS_date"
 
 curl --get \
   --data-urlencode "set=router" \
   --data-urlencode "name=$ROUTERNAME" \
   --data-urlencode "WAN1=$WAN1_STATUS" \
   --data-urlencode "WAN2=$WAN2_STATUS" \
-  --data-urlencode "WAN3=$WAN3_STATUS" \
-  --data-urlencode "MACHINE=$MACHINE" \
-  --data-urlencode "SYSTEM_TYPE=$SYSTEM_TYPE" \
-  --data-urlencode "CPU_CORES=$CPU_CORES" \
-  --data-urlencode "PINGS=$PINGS" \
   --data-urlencode "NOPINGS=$NOPINGS" \
-  --data-urlencode "NOPINGS_CRIT=$NOPINGS_CRIT" \
   --data-urlencode "Memory_load=$Memory_load" \
   --data-urlencode "time=$TIME" \
   --data-urlencode "SPEEDTEST=$SPEEDTEST" \

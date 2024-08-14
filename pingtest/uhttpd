@@ -7,7 +7,7 @@ config uhttpd pingtest
     list listen_http 192.168.1.1:80
     # Server document root
     # remove doc_root from php.ini
-    option home /root/pingtest
+    option home /tmp/root/pingtest
     option rfc1918_filter 1
     option max_requests 3
     option max_connections 10

@@ -1,7 +1,6 @@
-# Max. 8 services for test to not invoke ESET firewall.
-
 53 Domain-53 d
 22 SSH-22 s
+23 Telnet-23 t
 222 SSH(Dropbear)-222 S
 80 HTTP-80 w
 443 HTTPS-443 W
@@ -14,4 +13,4 @@
 9100 jetdirect-9100 j
 3389 RDP-3389 R
 37777 Dahua-37777 D
-
+8085 OpenHW-8085 O

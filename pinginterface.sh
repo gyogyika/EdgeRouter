@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /root/colors.ini
+source /tmp/root/colors.ini
 
 pinginterface() {
 WAN_name=$1
@@ -68,7 +68,7 @@ then
         fi
       fi
 
-    done < /root/pinginterface
+    done < /tmp/root/pinginterface
 
     # for testing
     #echo "Success pings:" $COUNTPING

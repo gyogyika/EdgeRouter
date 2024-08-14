@@ -1,5 +1,5 @@
 #!/bin/bash
 
-source /root/Pingto.sh
+source /tmp/root/Pingto.sh
 
-Pingto /root/pingto2
+Pingto /tmp/root/pingto2

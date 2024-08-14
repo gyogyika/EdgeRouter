@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bash /root/freemyip.sh
+bash /tmp/root/freemyip.sh

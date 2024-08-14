@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source /root/settings.ini
-source /root/colors.ini
+source /tmp/root/settings.ini
+source /tmp/root/colors.ini
 
 COUNTER=0
 PING_COUNTER=0
