@@ -18,7 +18,6 @@
 /root/send-mail-save.sh
 /root/send-mail.sh
 /root/sendstatus.sh
-/root/sendstatusUPS.sh
 /root/settings.ini
 /root/speedtest.sh
 /root/utils
