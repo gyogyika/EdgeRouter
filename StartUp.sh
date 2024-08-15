@@ -1,14 +1,8 @@
 #!/bin/bash
 
-source /root/settings.ini
-
-#emailrelay --as-server --forward-on-disconnect --poll=60 --forward-to="$SMTP_SERVER":465 --client-tls-connection --client-auth=/etc/emailrelay.auth --log-file=/tmp/emailrelay.log --no-syslog
-
-sleep 5
-
-ntpd -q -p 1.openwrt.pool.ntp.org
-
-$SENDMAIL "Router started" "$(date)"
-
-bash $GETIP
 bash "/root/copytotmp.sh"
+sleep 10
+source /tmp/root/settings.ini
+bash "/root/settime.sh"
+bash $SENDMAIL "Router started" "$(date)"
+bash $GETIP
