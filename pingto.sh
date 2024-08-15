@@ -2,4 +2,4 @@
 
 source /tmp/root/Pingto.sh
 
-Pingto /tmp/root/pingto2
+Pingto /tmp/root/pingto

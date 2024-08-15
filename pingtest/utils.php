@@ -27,7 +27,7 @@ function getmacbyip($wol_ip) {
   $result_mac = '';
   $dhcp_file = '/etc/config/dhcp';
   $dhcp_lines = file($dhcp_file);
-  $dhcp_lines_count = count($dhcp_lines) - 1; 
+  $dhcp_lines_count = count($dhcp_lines) - 1;
 
   $i = 0;
   while ($i <= $dhcp_lines_count) {
@@ -39,7 +39,7 @@ function getmacbyip($wol_ip) {
       $ip = '';
       while (strpos($dhcp_lines[$i], 'config host') === false) {
 
-        if (strpos($dhcp_lines[$i], ' mac ') !== false) { 
+        if (strpos($dhcp_lines[$i], ' mac ') !== false) {
           $mac = $dhcp_lines[$i];
           $mac = getBetween($mac, "'", "'");
         }
@@ -47,10 +47,10 @@ function getmacbyip($wol_ip) {
         if (strpos($dhcp_lines[$i], ' ip ') !== false) {
           $ip = $dhcp_lines[$i];
           $ip = getBetween($ip, "'", "'");
-        } 
+        }
         $i++;
         if ($i >= $dhcp_lines_count) break;
-      }      
+      }
       if ($ip == $wol_ip) {
         $result_mac = $mac;
         break;
@@ -59,7 +59,7 @@ function getmacbyip($wol_ip) {
     }
     $i++;
   }
- 
+
   return $result_mac;
 }
 
@@ -90,7 +90,7 @@ function getBetween($string, $start = "", $end = ""){
       $endCharCount = strlen($firstSubStr);
     }
     return substr($firstSubStr, 0, $endCharCount);
-  } 
+  }
   else {
     return '';
   }
