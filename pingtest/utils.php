@@ -64,7 +64,9 @@ function getmacbyip($wol_ip) {
 }
 
 function ping($host, $interface) {
-  exec(sprintf('ping -c1 -W1 -I ' . $interface . ' ' . $host), $res, $rval);
+  //exec(sprintf('ping -c1 -W1 -I ' . $interface . ' ' . $host), $res, $rval);
+  exec(sprintf('ping -c1 -W1 ' . $host), $res, $rval);
+
   return $rval === 0;
 }
 
