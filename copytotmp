@@ -14,10 +14,10 @@
 /root/pingtest/
 /root/pingto
 /root/pingto.sh
-/root/pingtostk.sh
 /root/send-mail-save.sh
 /root/send-mail.sh
 /root/sendstatus.sh
+/root/settime.sh
 /root/settings.ini
 /root/speedtest.sh
 /root/utils
