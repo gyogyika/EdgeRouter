@@ -24,6 +24,10 @@ echo SYSTEM_TYPE: $SYSTEM_TYPE
 CPU_CORES=$(cat /proc/cpuinfo | awk -F: '/processor/ {print $0}' | wc -l)
 echo CPU_CORES: $CPU_CORES
 
+MONITORINGVER="invalid"
+read -r MONITORINGVER < "/tmp/root/monitoringver"
+echo MONITORINGVER: $MONITORINGVER
+
 NOPINGS="invalid"
 read -r NOPINGS < "/tmp/NOPINGS"
 echo NOPINGS: $NOPINGS
@@ -127,6 +131,7 @@ curl --get \
   --data-urlencode "NOPINGS_CRIT=$NOPINGS_CRIT" \
   --data-urlencode "Memory_load=$Memory_load" \
   --data-urlencode "time=$TIME" \
+  --data-urlencode "MONITORINGVER=$MONITORINGVER" \
   --data-urlencode "SPEEDTEST=$SPEEDTEST" \
   --data-urlencode "VPNCLIENTS=$VPNCLIENTS" \
   --data-urlencode "DHCP_LEASES=$DHCP_LEASES" \

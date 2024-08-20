@@ -9,6 +9,7 @@
 /root/cron5minute.sh
 /root/cron60minute.sh
 /root/freemyip.sh
+/root/monitoringver
 /root/pinginterface
 /root/pinginterface.sh
 /root/pingtest/
