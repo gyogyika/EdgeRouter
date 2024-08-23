@@ -4,16 +4,19 @@ source /tmp/root/settings.ini
 source /tmp/root/pinginterface.sh
 source /tmp/root/utils
 
-echo "$WAN1NAME ISP 1: $ISP1NAME"
-pinginterface "WAN1" "$WAN1NAME" "$ISP1NAME"
+echo "$WAN1NAME ISP: $WAN1ISPNAME"
+echo "$WAN1NAME interface: $WAN1IF"
+pinginterface "WAN1" "$WAN1NAME" "$WAN1ISPNAME" "$WAN1IF"
 WAN1_INTERNET=$WAN_RESULT
 
-echo "$WAN2NAME ISP 2: $ISP2NAME"
-pinginterface "WAN2" "$WAN2NAME" "$ISP2NAME"
+echo "$WAN2NAME ISP: $WAN2ISPNAME"
+echo "$WAN2NAME interface: $WAN2IF"
+pinginterface "WAN2" "$WAN2NAME" "$WAN2ISPNAME" "$WAN2IF"
 WAN2_INTERNET=$WAN_RESULT
 
-echo "$WAN3NAME ISP 3: $ISP3NAME"
-pinginterface "WAN3" "$WAN3NAME" "$ISP3NAME"
+echo "$WAN3NAME ISP: $WAN3ISPNAME"
+echo "$WAN3NAME interface: $WAN3IF"
+pinginterface "WAN3" "$WAN3NAME" "$WAN3ISPNAME" "$WAN3IF"
 WAN3_INTERNET=$WAN_RESULT
 
 if [[ "$WAN1_INTERNET" = "NONE" ]]

@@ -6,12 +6,14 @@ pinginterface() {
 WAN_name=$1
 WAN=$2
 ISP=$3
+WANIF=$4
 
 if [ "$WAN" != "none" ]
 then
   WAN_IP=$(get_interface_ip "$WAN")
   WAN_PROTO=$(get_interface_proto "$WAN")
-  echo "$WAN IP: $WAN_IP $WAN_PROTO"
+  echo "$WAN protocol: $WAN_PROTO"
+  echo "$WAN IP: $WAN_IP"
   get_wan_status "$WAN_name"
   WAN_PREV_STATUS=$WAN_STATUS
 
@@ -35,13 +37,6 @@ then
     if [ "$WAN_PREV_STATUS" = "NONE" ]
     then
       $SENDMAIL "$WAN IP assigned: $WAN_IP" "ISP: $ISP, proto: $WAN_PROTO"
-    fi
-
-    if [ "$OPENWRTVER" -gt 20 ]
-    then
-      WANIF=$(uci get network."$WAN".device)
-    else
-      WANIF=$(uci get network."$WAN".ifname)
     fi
 
     MESSAGE_LINE=""
@@ -107,5 +102,5 @@ else
   WAN_RESULT=""
   set_wan_status "$WAN_name" $WAN_RESULT
 fi
-echo 
+echo
 }

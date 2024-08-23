@@ -7,13 +7,19 @@ get_wan_status "WAN1"
 WAN1_STATUS=$WAN_STATUS
 echo WAN1: $WAN1_STATUS
 
+echo WAN1 ISP: $WAN1ISPNAME
+
 get_wan_status "WAN2"
 WAN2_STATUS=$WAN_STATUS
 echo WAN2: $WAN2_STATUS
 
+echo WAN2 ISP: $WAN2ISPNAME
+
 get_wan_status "WAN3"
 WAN3_STATUS=$WAN_STATUS
 echo WAN3: $WAN3_STATUS
+
+echo WAN3 ISP: $WAN3ISPNAME
 
 MACHINE=$(cat /proc/cpuinfo | awk -F': ' '/machine/ {print $2}')
 echo MACHINE: $MACHINE
@@ -123,6 +129,9 @@ curl --get \
   --data-urlencode "WAN1=$WAN1_STATUS" \
   --data-urlencode "WAN2=$WAN2_STATUS" \
   --data-urlencode "WAN3=$WAN3_STATUS" \
+  --data-urlencode "WAN1_ISP=$WAN1ISPNAME" \
+  --data-urlencode "WAN2_ISP=$WAN2ISPNAME" \
+  --data-urlencode "WAN3_ISP=$WAN3ISPNAME" \
   --data-urlencode "MACHINE=$MACHINE" \
   --data-urlencode "SYSTEM_TYPE=$SYSTEM_TYPE" \
   --data-urlencode "CPU_CORES=$CPU_CORES" \
