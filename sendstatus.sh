@@ -21,6 +21,14 @@ echo WAN3: $WAN3_STATUS
 
 echo WAN3 ISP: $WAN3ISPNAME
 
+RX=$(cat /proc/net/dev | awk '/'"$WAN1IF"'/ {print $2}')
+#RX=$(convertbyte $RX)
+echo $WAN1IF "RX:" $RX
+
+TX=$(cat /proc/net/dev | awk '/'"$WAN1IF"'/ {print $10}')
+#TX=$(convertbyte $TX)
+echo $WAN1IF "TX:" $TX
+
 MACHINE=$(cat /proc/cpuinfo | awk -F': ' '/machine/ {print $2}')
 echo MACHINE: $MACHINE
 
@@ -132,6 +140,8 @@ curl --get \
   --data-urlencode "WAN1_ISP=$WAN1ISPNAME" \
   --data-urlencode "WAN2_ISP=$WAN2ISPNAME" \
   --data-urlencode "WAN3_ISP=$WAN3ISPNAME" \
+  --data-urlencode "RX=$RX" \
+  --data-urlencode "TX=$TX" \
   --data-urlencode "MACHINE=$MACHINE" \
   --data-urlencode "SYSTEM_TYPE=$SYSTEM_TYPE" \
   --data-urlencode "CPU_CORES=$CPU_CORES" \

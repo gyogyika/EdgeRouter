@@ -56,3 +56,39 @@ get_wan_status() {
   WAN_STATUS_FILE="/tmp/$1"
   read -r WAN_STATUS < "$WAN_STATUS_FILE"
 }
+
+convertbyte() {
+  str="$1"
+  suffix="B"
+
+  strlen="${#str}"
+  if [ $strlen -gt 3 ]
+  then
+    str=$((str / 1000))
+    suffix="kB"
+  fi
+
+  strlen="${#str}"
+  if [ $strlen -gt 3 ]
+  then
+    str=$((str / 1000))
+    suffix="MB"
+  fi
+
+  strlen="${#str}"
+  if [ $strlen -gt 3 ]
+  then
+    str=$((str / 1000))
+    suffix="GB"
+  fi
+
+  strlen="${#str}"
+  if [ $strlen -gt 3 ]
+  then
+    str=$((str / 1000))
+   suffix="TB"
+ fi
+
+  echo "$str" "$suffix"
+}
+
