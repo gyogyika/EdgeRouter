@@ -21,13 +21,21 @@ echo WAN3: $WAN3_STATUS
 
 echo WAN3 ISP: $WAN3ISPNAME
 
-RX=$(cat /proc/net/dev | awk '/'"$WAN1IF"'/ {print $2}')
-#RX=$(convertbyte $RX)
-echo $WAN1IF "RX:" $RX
+# For LAN side download
+LAN_TX=$(cat /proc/net/dev | awk '/'"$LANIF"'/ {print $2}')
+echo $LANIF "LAN_TX:" $LAN_TX
 
-TX=$(cat /proc/net/dev | awk '/'"$WAN1IF"'/ {print $10}')
-#TX=$(convertbyte $TX)
-echo $WAN1IF "TX:" $TX
+# For LAN side upload
+LAN_RX=$(cat /proc/net/dev | awk '/'"$LANIF"'/ {print $10}')
+echo $LANIF "LAN_RX:" $LAN_RX
+
+# For WAN side download
+WAN_RX=$(cat /proc/net/dev | awk '/'"$WAN1IF"'/ {print $2}')
+echo $WAN1IF "WAN_RX:" $WAN_RX
+
+# For WAN side upload
+WAN_TX=$(cat /proc/net/dev | awk '/'"$WAN1IF"'/ {print $10}')
+echo $WAN1IF "WAN_TX:" $WAN_TX
 
 MACHINE=$(cat /proc/cpuinfo | awk -F': ' '/machine/ {print $2}')
 echo MACHINE: $MACHINE
@@ -140,8 +148,10 @@ curl --get \
   --data-urlencode "WAN1_ISP=$WAN1ISPNAME" \
   --data-urlencode "WAN2_ISP=$WAN2ISPNAME" \
   --data-urlencode "WAN3_ISP=$WAN3ISPNAME" \
-  --data-urlencode "RX=$RX" \
-  --data-urlencode "TX=$TX" \
+  --data-urlencode "LAN_RX=$LAN_RX" \
+  --data-urlencode "LAN_TX=$LAN_TX" \
+  --data-urlencode "WAN_RX=$WAN_RX" \
+  --data-urlencode "WAN_TX=$WAN_TX" \
   --data-urlencode "MACHINE=$MACHINE" \
   --data-urlencode "SYSTEM_TYPE=$SYSTEM_TYPE" \
   --data-urlencode "CPU_CORES=$CPU_CORES" \
