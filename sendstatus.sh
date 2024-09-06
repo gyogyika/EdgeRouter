@@ -21,20 +21,21 @@ echo WAN3: $WAN3_STATUS
 
 echo WAN3 ISP: $WAN3ISPNAME
 
+# : ending char for interface name, e.g.: br-lan:
 # For LAN side download
-LAN_TX=$(cat /proc/net/dev | awk '/'"$LANIF"'/ {print $2}')
+LAN_TX=$(cat /proc/net/dev | awk '/'"$LANIF"':/ {print $2}')
 echo $LANIF "LAN_TX:" $LAN_TX
 
 # For LAN side upload
-LAN_RX=$(cat /proc/net/dev | awk '/'"$LANIF"'/ {print $10}')
+LAN_RX=$(cat /proc/net/dev | awk '/'"$LANIF"':/ {print $10}')
 echo $LANIF "LAN_RX:" $LAN_RX
 
 # For WAN side download
-WAN_RX=$(cat /proc/net/dev | awk '/'"$WAN1IF"'/ {print $2}')
+WAN_RX=$(cat /proc/net/dev | awk '/'"$WAN1IF"':/ {print $2}')
 echo $WAN1IF "WAN_RX:" $WAN_RX
 
 # For WAN side upload
-WAN_TX=$(cat /proc/net/dev | awk '/'"$WAN1IF"'/ {print $10}')
+WAN_TX=$(cat /proc/net/dev | awk '/'"$WAN1IF"':/ {print $10}')
 echo $WAN1IF "WAN_TX:" $WAN_TX
 
 MACHINE=$(cat /proc/cpuinfo | awk -F': ' '/machine/ {print $2}')
