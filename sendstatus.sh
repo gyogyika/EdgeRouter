@@ -67,6 +67,9 @@ SPEEDTEST="invalid"
 read -r SPEEDTEST < "/tmp/SPEEDTEST"
 echo SPEEDTEST: $SPEEDTEST
 
+PING=$(ping -c1 www.msftncsi.com | awk -F/ '{print $5}')
+echo PING: $PING
+
 VPNCLIENTS="invalid"
 VPNCLIENTS=$(awk '{print}' "/tmp/VPNCLIENTS") #multiline read
 echo VPNCLIENTS: $VPNCLIENTS
@@ -163,6 +166,7 @@ curl --get \
   --data-urlencode "time=$TIME" \
   --data-urlencode "MONITORINGVER=$MONITORINGVER" \
   --data-urlencode "SPEEDTEST=$SPEEDTEST" \
+  --data-urlencode "PING=$PING" \
   --data-urlencode "VPNCLIENTS=$VPNCLIENTS" \
   --data-urlencode "DHCP_LEASES=$DHCP_LEASES" \
   --data-urlencode "Uptime=$Uptime" \
