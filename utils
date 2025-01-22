@@ -32,6 +32,7 @@ check_ip_change() {
   else
     cp $INET_CURRENT_IP $INET_PREV_IP
     $GETIP
+    $GETFREEMYIP
     echo "IP changed."
   fi
   echo
