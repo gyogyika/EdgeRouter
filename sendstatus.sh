@@ -105,24 +105,26 @@ echo "Storage_load: $Storage_load"
 OpenWrt=$(awk -F= '/DISTRIB_DESCRIPTION/ {print $2}' /etc/openwrt_release)
 echo "OpenWrt: $OpenWrt"
 
-CERT_EXP=$(openssl x509 -enddate -noout -in "$VPNCERT" | awk -F'=' '{print $2}')
-echo "VPN cert expiration Not After: ""$CERT_EXP"
+if [ -n "$VPNCERT" ]
+then
+  CERT_EXP=$(openssl x509 -enddate -noout -in "$VPNCERT" | awk -F'=' '{print $2}')
+  echo "VPN cert expiration Not After: ""$CERT_EXP"
 
-CERT_EXP_DAY=$(echo "$CERT_EXP" | awk '{print $2}')
-#echo "$CERT_EXP_DAY"
+  CERT_EXP_DAY=$(echo "$CERT_EXP" | awk '{print $2}')
+  #echo "$CERT_EXP_DAY"
 
-CERT_EXP_MONTH_NAME=$(echo "$CERT_EXP" | awk '{print $1}')
-#echo "$CERT_EXP_MONTH_NAME"
+  CERT_EXP_MONTH_NAME=$(echo "$CERT_EXP" | awk '{print $1}')
+  #echo "$CERT_EXP_MONTH_NAME"
 
-CERT_EXP_MONTH=$(echo "$CERT_EXP_MONTH_NAME" | awk '{printf "%01d",(index("JanFebMarAprMayJunJulAugSepOctNovDec",$0)+2)/3}')
-#echo "$CERT_EXP_MONTH"
+  CERT_EXP_MONTH=$(echo "$CERT_EXP_MONTH_NAME" | awk '{printf "%01d",(index("JanFebMarAprMayJunJulAugSepOctNovDec",$0)+2)/3}')
+  #echo "$CERT_EXP_MONTH"
 
-CERT_EXP_YEAR=$(echo "$CERT_EXP" | awk '{print $4}')
-#echo "$CERT_EXP_YEAR"
+  CERT_EXP_YEAR=$(echo "$CERT_EXP" | awk '{print $4}')
+  #echo "$CERT_EXP_YEAR"
 
-VPNCERTEXP=$CERT_EXP_DAY.$CERT_EXP_MONTH.$CERT_EXP_YEAR
-echo "VPN cert expiration: ""$VPNCERTEXP"
-
+  VPNCERTEXP=$CERT_EXP_DAY.$CERT_EXP_MONTH.$CERT_EXP_YEAR
+  echo "VPN cert expiration: ""$VPNCERTEXP"
+fi
 
 TIME=$(date +%s)
 
